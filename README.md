@@ -1,6 +1,12 @@
-# 🧪 Playwright + TypeScript E-commerce Test Suite
+# QA Automation Portfolio - SauceDemo
+
 
 This project is a complete automation test suite using **Playwright** and **TypeScript**, targeting the [SauceDemo](https://www.saucedemo.com) e-commerce demo site.
+
+## 🧪 Tech Stack
+- Automation Tool: **Playwright**
+- Language: **TypeScript**
+- Framework: **Dotenv**
 
 ## 📁 Structure
 ```
@@ -14,7 +20,7 @@ playwright-ecommerce-tests/
 └── README.md             # Project documentation
 ```
 
-## 🚀 Setup
+## 🚀 How to Run
 ```bash
 git clone https://github.com/your-username/playwright-ecommerce-tests.git
 cd playwright-ecommerce-tests
@@ -39,11 +45,6 @@ npx playwright test
 - Checkout process
 - Logout process
 
-## 🧰 Tech Stack
-- [Playwright](https://playwright.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Dotenv](https://www.npmjs.com/package/dotenv)
-
----
+> Make sure Chrome is installed and in your system path.---
 
 Feel free to fork or contribute. QA is love, QA is life. 💙
