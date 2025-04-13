@@ -1,5 +1,6 @@
-# QA Automation Portfolio - SauceDemo
+# QA Automation Portfolio - SauceDemo - Playwright
 
+<img src="screenshot-passing.png"></img>
 
 This project is a complete automation test suite using **Playwright** and **TypeScript**, targeting the [SauceDemo](https://www.saucedemo.com) e-commerce demo site.
 
@@ -20,6 +21,15 @@ playwright-ecommerce-tests/
 └── README.md             # Project documentation
 ```
 
+## ✅ What is tested?
+| Area        | Scenarios |
+|-------------|-----------|
+| **Login**   | Valid & invalid login attempts |
+| **Inventory** | Product listing visibility |
+| **Cart**    | Add and remove items from cart |
+| **Checkout**| Enter user info and complete checkout |
+| **Finish**  | Confirmation message validation |
+
 ## 🚀 How to Run
 ```bash
 git clone https://github.com/your-username/playwright-ecommerce-tests.git
@@ -37,13 +47,6 @@ Run the tests:
 ```bash
 npx playwright test
 ```
-
-## ✅ Features Tested
-- Login functionality
-- Product listing validation
-- Add to cart
-- Checkout process
-- Logout process
 
 > Make sure Chrome is installed and in your system path.---
 
