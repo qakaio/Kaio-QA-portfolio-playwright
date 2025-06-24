@@ -7,7 +7,6 @@ This project is a complete automation test suite using **Playwright** and **Type
 ## 🧪 Tech Stack
 - Automation Tool: **Playwright**
 - Language: **TypeScript**
-- Framework: **Dotenv**
 
 ## 📁 Structure
 ```
