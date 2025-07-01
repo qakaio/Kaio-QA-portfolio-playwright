@@ -77,6 +77,7 @@ These tests are based on the official [Test Cases](https://www.automationexercis
 2. **Install dependencies:**
    ```bash
    npm install
+   npx playwright install
    ```
 
 3. **Run all tests:**
