@@ -1,12 +1,14 @@
 {
-  "name": "playwright-ecommerce-tests",
+  "name": "tests",
   "version": "1.0.0",
-  "scripts": {
-    "test": "npx playwright test"
-  },
+  "description": "",
+  "main": "test.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.42.1",
-    "dotenv": "^16.0.3",
-    "typescript": "^5.3.3"
+    "@playwright/test": "^1.53.1",
+    "@types/node": "^24.0.3"
   }
 }
