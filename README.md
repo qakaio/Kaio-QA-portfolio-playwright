@@ -118,22 +118,4 @@ Use the `--project` flag to run tests on a specific browser.
 
 ---
 
-## 📸 Screenshots & Demos (optional)
-
-You can add GIFs, screenshots, or test reports here to enhance visual appeal.
-
----
-
-## 📩 Contact
-
-If you like this project or want to collaborate:
-
-📧 Email: kaioqa@example.com  
-💼 LinkedIn: [linkedin.com/in/kaioqa](https://linkedin.com/in/kaioqa)  
-🐙 GitHub: [@qakaio](https://github.com/qakaio)
-
----
-
-## 🏷 License
-
-This project is open-source and available under the [MIT License](LICENSE).
+Feel free to fork or contribute. QA is love, QA is life. 💙
