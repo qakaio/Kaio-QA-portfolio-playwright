@@ -70,8 +70,8 @@ These tests are based on the official [Test Cases](https://www.automationexercis
 
 1. **Clone this repo:**
    ```bash
-   git clone https://github.com/your-username/your-repo.git
-   cd your-repo
+   git clone https://github.com/qakaio/Kaio-QA-portfolio-playwright.git
+   cd Kaio-QA-portfolio-playwright
    ```
 
 2. **Install dependencies:**
