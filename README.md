@@ -1,52 +1,139 @@
-# QA Automation Portfolio - SauceDemo - Playwright
+# 🧪 AutomationExercise Test Suite (Playwright + JavaScript)
 
-<img src="screenshot-passing.png"></img>
+This project contains a complete automated test suite using [Playwright](https://playwright.dev/) with JavaScript, covering all **26 official Test Cases** from the [AutomationExercise](https://www.automationexercise.com/) website.
 
-This project is a complete automation test suite using **Playwright** and **TypeScript**, targeting the [SauceDemo](https://www.saucedemo.com) e-commerce demo site.
+Built by [Kaio Garcia](https://github.com/qakaio) as part of my QA Automation portfolio.
 
-## 🧪 Tech Stack
-- Automation Tool: **Playwright**
-- Language: **TypeScript**
+---
 
-## 📁 Structure
+## 🚀 Tech Stack
+
+- [Playwright](https://playwright.dev/) (JavaScript)
+- Node.js (v18+ recommended)
+- VSCode + ESLint (optional)
+
+---
+
+## 📁 Project Structure
+
 ```
-playwright-ecommerce-tests/
-├── tests/                # Test specifications
-├── pages/                # Page Object Models
-├── .env                  # Environment variables (username & password)
-├── playwright.config.ts  # Playwright configuration
-├── tsconfig.json         # TypeScript configuration
-├── package.json          # Dependencies & scripts
-└── README.md             # Project documentation
-```
-
-## ✅ What is tested?
-| Area        | Scenarios |
-|-------------|-----------|
-| **Login**   | Valid & invalid login attempts |
-| **Inventory** | Product listing visibility |
-| **Cart**    | Add and remove items from cart |
-| **Checkout**| Enter user info and complete checkout |
-| **Finish**  | Confirmation message validation |
-
-## 🚀 How to Run
-```bash
-git clone https://github.com/your-username/playwright-ecommerce-tests.git
-cd playwright-ecommerce-tests
-npm install
+📂 tests
+ ├── TC01_register_user.spec.js
+ ├── TC02_login_user.spec.js
+ ├── ...
+ └── TC26_verify_scrollup_using_arrow.spec.js
+📄 playwright.config.js
+📄 package.json
+📄 README.md
 ```
 
-Create a `.env` file:
-```
-USERNAME=standard_user
-PASSWORD=secret_sauce
-```
+Each `.spec.js` file represents a **standalone test case**, following best practices for automation.
 
-Run the tests:
-```bash
-npx playwright test
-```
+---
 
-> Make sure Chrome is installed and in your system path.---
+## ✅ Automated Test Cases
 
-Feel free to fork or contribute. QA is love, QA is life. 💙
+These tests are based on the official [Test Cases](https://www.automationexercise.com/test_cases):
+
+| ID    | Test Case Description                                    |
+|-------|----------------------------------------------------------|
+| TC01  | Register User                                            |
+| TC02  | Login User                                               |
+| TC03  | Login with incorrect credentials                         |
+| TC04  | Logout User                                              |
+| TC05  | Register with existing email                             |
+| TC06  | Contact Us Form                                          |
+| TC07  | Test Cases Page                                          |
+| TC08  | Products Page                                            |
+| TC09  | Search Product                                           |
+| TC10  | Verify Product Details                                   |
+| TC11  | Add Product to Cart                                      |
+| TC12  | Add Product and Proceed to Checkout                      |
+| TC13  | Verify Address Details in Checkout Page                 |
+| TC14  | Register while Checkout                                  |
+| TC15  | Login before Checkout                                    |
+| TC16  | Download Invoice after Order                             |
+| TC17  | Remove Products from Cart                                |
+| TC18  | View Category Products                                   |
+| TC19  | View & Cart Brand Products                               |
+| TC20  | Search Products and Verify Cart                          |
+| TC21  | Add Review on Product                                    |
+| TC22  | Add to Cart from Recommended Items                       |
+| TC23  | Verify Address and Invoice Details After Order           |
+| TC24  | Download Invoice After Purchase                          |
+| TC25  | Scroll Down and Verify Subscription Section              |
+| TC26  | Scroll Up Using Arrow Button and Verify Home Visibility  |
+
+---
+
+## 🛠 How to Run Locally
+
+1. **Clone this repo:**
+   ```bash
+   git clone https://github.com/your-username/your-repo.git
+   cd your-repo
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Run all tests:**
+   ```bash
+   npx playwright test
+   ```
+
+4. **Run a specific test:**
+   ```bash
+   npx playwright test tests/TC01_register_user.spec.js
+   ```
+
+5. **View test report:**
+   ```bash
+   npx playwright show-report
+   ```
+
+---
+
+## 🌐 Cross-Browser Support
+
+This suite runs on:
+
+- ✅ Chromium (Chrome / Edge)
+- ✅ Firefox
+- ✅ WebKit (Safari)
+
+Use the `--project` flag to run tests on a specific browser.
+
+---
+
+## ✨ Highlights
+
+- Full coverage of 26 test cases
+- Clean, isolated scripts for each scenario
+- Page content and UI verification
+- Subscription, cart, invoice, and form interactions
+- Ideal for showcasing QA Automation skills
+
+---
+
+## 📸 Screenshots & Demos (optional)
+
+You can add GIFs, screenshots, or test reports here to enhance visual appeal.
+
+---
+
+## 📩 Contact
+
+If you like this project or want to collaborate:
+
+📧 Email: kaioqa@example.com  
+💼 LinkedIn: [linkedin.com/in/kaioqa](https://linkedin.com/in/kaioqa)  
+🐙 GitHub: [@qakaio](https://github.com/qakaio)
+
+---
+
+## 🏷 License
+
+This project is open-source and available under the [MIT License](LICENSE).
