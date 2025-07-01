@@ -1,0 +1,76 @@
+# Page snapshot
+
+```yaml
+- banner:
+  - link "Website for automation practice":
+    - /url: /
+    - img "Website for automation practice"
+  - list:
+    - listitem:
+      - link " Home":
+        - /url: /
+    - listitem:
+      - link " Products":
+        - /url: /products
+    - listitem:
+      - link " Cart":
+        - /url: /view_cart
+    - listitem:
+      - link " Logout":
+        - /url: /logout
+    - listitem:
+      - link " Delete Account":
+        - /url: /delete_account
+    - listitem:
+      - link " Test Cases":
+        - /url: /test_cases
+    - listitem:
+      - link " API Testing":
+        - /url: /api_list
+    - listitem:
+      - link " Video Tutorials":
+        - /url: https://www.youtube.com/c/AutomationExercise
+    - listitem:
+      - link " Contact us":
+        - /url: /contact_us
+    - listitem:  Logged in as Kaio QA - Test
+- list:
+  - listitem:
+    - link "Home":
+      - /url: /
+  - listitem: Shopping Cart
+- text: Proceed To Checkout
+- table:
+  - rowgroup:
+    - row "Item Description Price Quantity Total":
+      - cell "Item"
+      - cell "Description"
+      - cell "Price"
+      - cell "Quantity"
+      - cell "Total"
+      - cell
+  - rowgroup:
+    - row "Product Image Blue Top Women > Tops Rs. 500 2 Rs. 1000 ":
+      - cell "Product Image":
+        - link "Product Image":
+          - /url: ""
+          - img "Product Image"
+      - cell "Blue Top Women > Tops":
+        - heading "Blue Top" [level=4]:
+          - link "Blue Top":
+            - /url: /product_details/1
+        - paragraph: Women > Tops
+      - cell "Rs. 500":
+        - paragraph: Rs. 500
+      - cell "2":
+        - button "2"
+      - cell "Rs. 1000":
+        - paragraph: Rs. 1000
+      - cell ""
+- contentinfo:
+  - heading "Subscription" [level=2]
+  - textbox "Your email address"
+  - button ""
+  - paragraph: Get the most recent updates from our site and be updated your self...
+  - paragraph: Copyright © 2021 All rights reserved
+```
