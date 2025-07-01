@@ -10,7 +10,7 @@ Built by [Kaio Garcia](https://github.com/qakaio) as part of my QA Automation po
 
 - [Playwright](https://playwright.dev/) (JavaScript)
 - Node.js (v18+ recommended)
-- VSCode + ESLint (optional)
+- VSCode (optional)
 
 ---
 
