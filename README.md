@@ -118,4 +118,4 @@ Use the `--project` flag to run tests on a specific browser.
 
 ---
 
-Feel free to fork or contribute. QA is love, QA is life. 💙
+QA is love, QA is life. 💙
