@@ -1,11 +1,11 @@
 const { test, expect } = require('@playwright/test');
 
 test('TC23 - Verify address details in checkout page', async ({ page }) => {
-  await page.goto('https://www.automationexercise.com/login');
+  await page.goto('https://www.automationexercise.com/login', { waitUntil: 'domcontentloaded' });
   await page.fill('[data-qa="login-email"]', 'kaioqa@test.com');
   await page.fill('[data-qa="login-password"]', 'Password123');
   await page.click('[data-qa="login-button"]');
-  await page.goto('https://www.automationexercise.com/products');
+  await page.goto('https://www.automationexercise.com/products', { waitUntil: 'domcontentloaded' });
   await page.locator('.product-image-wrapper').first().hover();
   await page.click('a[data-product-id="1"]');
   await expect(page.locator('#cartModal')).toBeVisible();

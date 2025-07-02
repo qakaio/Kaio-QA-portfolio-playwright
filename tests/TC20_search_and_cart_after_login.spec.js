@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
 test('TC20 - Search product, add to cart, then login', async ({ page }) => {
-  await page.goto('https://www.automationexercise.com/products');
+  await page.goto('https://www.automationexercise.com/products', { waitUntil: 'domcontentloaded' });
   await page.fill('input[name="search"]', 'Dress');
   await page.click('button[type="button"]');
   await page.click('a[data-product-id="3"]');
