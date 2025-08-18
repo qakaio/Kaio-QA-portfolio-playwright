@@ -117,5 +117,3 @@ Use the `--project` flag to run tests on a specific browser.
 - Subscription, cart, invoice, and form interactions
 
 ---
-
-QA is love, QA is life. 💙
