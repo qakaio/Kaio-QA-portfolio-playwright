@@ -9,6 +9,7 @@ This repository uses CI/CD with GitHub Actions, running daily at 09:00 and 21:00
 
 
 Status:
+
 ![Playwright CI/CD](https://github.com/qakaio/Kaio-QA-portfolio-playwright/actions/workflows/playwright.yml/badge.svg)
 
 ---
