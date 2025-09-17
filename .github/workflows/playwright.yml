@@ -2,8 +2,9 @@ name: Playwright CI/CD
 
 on:
   schedule:
-    - cron: "0 9,21 * * *" # 09h 21h UTC
-  workflow_dispatch: # manual
+    - cron: "0 9,21 * * *" # executa às 09h e 21h UTC
+  workflow_dispatch: # permite execução manual
+
 jobs:
   test:
     runs-on: ubuntu-latest
