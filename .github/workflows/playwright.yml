@@ -2,42 +2,34 @@ name: Playwright CI/CD
 
 on:
   schedule:
-    - cron: "0 9,21 * * *" # executa às 09h e 21h UTC
-  workflow_dispatch: # permite execução manual
+    - cron: "0 9,21 * * *"
+  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-22.04
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
+    - uses: actions/setup-node@v3
       with:
         node-version: 20
 
-    - name: Install dependencies
-      run: npm install
+    - run: npm install
 
-    - name: Install Playwright system dependencies
-      run: npx playwright install-deps
+    - run: npx playwright install-deps
 
-    - name: Install Playwright browsers
-      run: npx playwright install
+    - run: npx playwright install
 
-    - name: Run Playwright tests
-      run: npx playwright test --reporter=html
+    - run: npx playwright test --reporter=html
 
-    - name: Upload HTML report as artifact
-      uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v4
       with:
         name: playwright-report
         path: playwright-report
 
-    - name: Deploy Playwright report to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v4
+    - uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: playwright-report
