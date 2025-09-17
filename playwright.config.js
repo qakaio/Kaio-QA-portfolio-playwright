@@ -1,6 +1,13 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
 
+module.exports = {
+  timeout: 60000,
+  expect: {
+    timeout: 15000
+  }
+};
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
