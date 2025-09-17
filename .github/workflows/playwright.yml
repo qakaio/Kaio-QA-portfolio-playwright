@@ -7,7 +7,10 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.44.0-focal
+      options: --user root
 
     steps:
     - uses: actions/checkout@v3
@@ -17,8 +20,6 @@ jobs:
         node-version: 20
 
     - run: npm install
-
-    - run: npx playwright install-deps
 
     - run: npx playwright install
 
