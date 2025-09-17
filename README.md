@@ -116,4 +116,4 @@ Use the `--project` flag to run tests on a specific browser.
 - Page content and UI verification
 - Subscription, cart, invoice, and form interactions
 
-![Playwright CI/CD](https://github.com/<usuario>/<repo>/actions/workflows/playwright.yml/badge.svg)
+![Playwright CI/CD](https://github.com/qakaio/Kaio-QA-portfolio-playwright/actions/workflows/playwright.yml/badge.svg)
