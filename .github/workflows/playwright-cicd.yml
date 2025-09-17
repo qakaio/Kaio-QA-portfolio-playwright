@@ -1,9 +1,9 @@
-name: Playwright CI/CD - Kaio Garcia
+name: Playwright CI/CD
 
 on:
   schedule:
-    - cron: "0 9,21 * * *" 
-  workflow_dispatch: 
+    - cron: "0 9,21 * * *" # executa às 09h e 21h UTC
+  workflow_dispatch: # permite execução manual
 
 jobs:
   test:
@@ -31,9 +31,7 @@ jobs:
         path: playwright-report
 
     - name: Deploy Playwright report to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v6
+      uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: playwright-report
-        # Se quiser publicar em uma branch específica, use:
-        # publish_branch: gh-pages
