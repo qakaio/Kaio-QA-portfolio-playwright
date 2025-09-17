@@ -7,10 +7,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.21.0-focal
-      options: --user root
+    runs-on: ubuntu-22.04
 
     steps:
     - name: Checkout repository
@@ -29,7 +26,6 @@ jobs:
 
     - name: Install Playwright browsers
       run: npx playwright install
-
 
     - name: Run Playwright tests
       run: npx playwright test --reporter=html
