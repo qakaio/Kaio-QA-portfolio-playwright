@@ -115,3 +115,5 @@ Use the `--project` flag to run tests on a specific browser.
 - Clean, isolated scripts for each scenario
 - Page content and UI verification
 - Subscription, cart, invoice, and form interactions
+
+![Playwright CI/CD](https://github.com/<usuario>/<repo>/actions/workflows/playwright.yml/badge.svg)
