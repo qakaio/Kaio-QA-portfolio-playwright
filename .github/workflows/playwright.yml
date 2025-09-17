@@ -2,8 +2,8 @@ name: Playwright CI/CD
 
 on:
   schedule:
-    - cron: "0 9,21 * * *" 
-  workflow_dispatch: 
+    - cron: "0 9,21 * * *" # executa às 09h e 21h UTC
+  workflow_dispatch: # permite execução manual
 
 jobs:
   test:
@@ -19,8 +19,10 @@ jobs:
         node-version: 20
 
     - name: Install dependencies
-      run: npm install 
-      run: npx playwright install        
+      run: npm install
+
+    - name: Install Playwright browsers
+      run: npx playwright install
 
     - name: Run Playwright tests
       run: npx playwright test --reporter=html
