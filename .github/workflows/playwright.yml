@@ -8,9 +8,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.44.0-focal
-      options: --user root
 
     steps:
     - uses: actions/checkout@v3
