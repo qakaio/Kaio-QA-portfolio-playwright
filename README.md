@@ -19,6 +19,7 @@ Status:
 - [Playwright](https://playwright.dev/) (JavaScript)
 - Node.js (v18+ recommended)
 - VSCode (optional)
+- GitHub Actions (CI/CD)
 
 ---
 
