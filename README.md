@@ -4,8 +4,9 @@ This project contains a complete automated test suite using [Playwright](https:/
 
 Built by [Kaio Garcia](https://github.com/qakaio) as part of my QA Automation portfolio.
 
-This repository uses CI/CD with GitHub Actions, running daily at 09:00 and 21:00 UTC, generating a report at the following page
-(Work in Progress)
+This repository uses CI/CD with GitHub Actions, running daily at 09:00 and 21:00 UTC, generating a report at the following page:
+
+https://qakaio.github.io/Kaio-QA-portfolio-playwright/index.html
 
 
 Status:
