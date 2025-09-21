@@ -1,6 +1,6 @@
 # 🧪 AutomationExercise Test Suite (Playwright + JavaScript)
 
-This project contains a complete automated test suite using [Playwright](https://playwright.dev/) with JavaScript, covering all **26 official Test Cases** from the [AutomationExercise](https://www.automationexercise.com/) website.
+This project contains a complete automated test suite using [Playwright](https://playwright.dev/) with JavaScript, covering **26 Test Cases** from the [AutomationExercise](https://www.automationexercise.com/) website.
 
 Built by [Kaio Garcia](https://github.com/qakaio) as part of my QA Automation portfolio.
 
