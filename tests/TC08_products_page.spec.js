@@ -1,7 +1,8 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('./fixtures');
+const { baseURL } = require('../utils');
 
 test('TC08 - All products page is visible', async ({ page }) => {
-  await page.goto('https://www.automationexercise.com');
+  await page.goto(baseURL);
   await page.locator('a[href="/products"]').scrollIntoViewIfNeeded();
   await page.click('a[href="/products"]');
   await expect(page).toHaveURL(/\/products/);

@@ -1,7 +1,8 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('./fixtures');
+const { baseURL } = require('../utils');
 
 test('TC24 - Download invoice with new user', async ({ page, browserName, context }) => {
-  await page.goto('https://www.automationexercise.com/signup');
+  await page.goto(baseURL + '/signup');
   const email = `kaioqa+${Date.now()}@test.com`;
 
   await page.fill('input[data-qa="signup-name"]', 'Kaio QA');
@@ -31,7 +32,7 @@ test('TC24 - Download invoice with new user', async ({ page, browserName, contex
 
   await page.waitForSelector('a[href="/logout"]', { timeout: 30000 });
 
-  await page.goto('https://www.automationexercise.com/products');
+  await page.goto(baseURL + '/products');
   await page.click('a[href="/product_details/1"]');
   await page.click('button.cart');
 

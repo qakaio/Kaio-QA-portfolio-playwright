@@ -1,7 +1,8 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('./fixtures');
+const { baseURL } = require('../utils');
 
 test('TC05 - Register with existing email', async ({ page }) => {
-  await page.goto('https://www.automationexercise.com/login', { waitUntil: 'domcontentloaded' });
+  await page.goto(baseURL + '/login', { waitUntil: 'domcontentloaded' });
   await page.fill('[data-qa="signup-name"]', 'Kaio');
   await page.fill('[data-qa="signup-email"]', 'kaioqa@test.com');
   await page.click('[data-qa="signup-button"]');

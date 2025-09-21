@@ -1,11 +1,12 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('./fixtures');
+const { LoginHelper, getTestUser, baseURL } = require('../utils');
 
 test('TC23 - Verify address details in checkout page', async ({ page }) => {
-  await page.goto('https://www.automationexercise.com/login', { waitUntil: 'domcontentloaded' });
-  await page.fill('[data-qa="login-email"]', 'kaioqa@test.com');
-  await page.fill('[data-qa="login-password"]', 'Password123');
-  await page.click('[data-qa="login-button"]');
-  await page.goto('https://www.automationexercise.com/products', { waitUntil: 'domcontentloaded' });
+  await page.goto(baseURL + '/login', { waitUntil: 'domcontentloaded' });
+  const user = getTestUser();
+  const loginHelper = new LoginHelper(page);
+  await loginHelper.login(user.email, user.password);
+  await page.goto(baseURL + '/products', { waitUntil: 'domcontentloaded' });
   await page.locator('.product-image-wrapper').first().hover();
   await page.click('a[data-product-id="1"]');
   await expect(page.locator('#cartModal')).toBeVisible();

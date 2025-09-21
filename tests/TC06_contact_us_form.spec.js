@@ -1,14 +1,14 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('./fixtures');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const { baseURL } = require('../utils');
 
 test('TC06 - Submit contact form with working file upload', async ({ page }) => {
-
   const tempDir = os.tmpdir();
   const filePath = path.join(tempDir, 'sample.txt');
   fs.writeFileSync(filePath, 'Test file content');
-  await page.goto('https://www.automationexercise.com/contact_us', { waitUntil: 'domcontentloaded' });
+  await page.goto(baseURL + '/contact_us', { waitUntil: 'domcontentloaded' });
   await page.fill('[data-qa="name"]', 'Kaio');
   await page.fill('[data-qa="email"]', 'kaioqa@test.com');
   await page.fill('[data-qa="subject"]', 'Contact');

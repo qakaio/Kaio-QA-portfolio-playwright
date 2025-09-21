@@ -1,10 +1,11 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('./fixtures');
+const { LoginHelper, getTestUser, baseURL } = require('../utils');
 
 test('TC02 - Login with valid credentials', async ({ page }) => {
-  await page.goto('https://www.automationexercise.com');
+  await page.goto(baseURL);
+  const user = getTestUser();
+  const loginHelper = new LoginHelper(page);
   await page.click('a[href="/login"]');
-  await page.fill('input[data-qa="login-email"]', 'kaioqa@test.com');
-  await page.fill('input[data-qa="login-password"]', 'Password123');
-  await page.click('button[data-qa="login-button"]');
+  await loginHelper.login(user.email, user.password);
   await expect(page.locator('a:has-text("Logged in as")')).toBeVisible();
 });
