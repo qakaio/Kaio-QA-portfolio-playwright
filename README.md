@@ -45,34 +45,35 @@ Each `.spec.js` file represents a **standalone test case**, following best pract
 
 These tests are based on the official [Test Cases](https://www.automationexercise.com/test_cases):
 
-| ID    | Test Case Description                                    |
-|-------|----------------------------------------------------------|
-| TC01  | Register User                                            |
-| TC02  | Login User                                               |
-| TC03  | Login with incorrect credentials                         |
-| TC04  | Logout User                                              |
-| TC05  | Register with existing email                             |
-| TC06  | Contact Us Form                                          |
-| TC07  | Test Cases Page                                          |
-| TC08  | Products Page                                            |
-| TC09  | Search Product                                           |
-| TC10  | Verify Product Details                                   |
-| TC11  | Add Product to Cart                                      |
-| TC12  | Add Product and Proceed to Checkout                      |
-| TC13  | Verify Address Details in Checkout Page                 |
-| TC14  | Register while Checkout                                  |
-| TC15  | Login before Checkout                                    |
-| TC16  | Download Invoice after Order                             |
-| TC17  | Remove Products from Cart                                |
-| TC18  | View Category Products                                   |
-| TC19  | View & Cart Brand Products                               |
-| TC20  | Search Products and Verify Cart                          |
-| TC21  | Add Review on Product                                    |
-| TC22  | Add to Cart from Recommended Items                       |
-| TC23  | Verify Address and Invoice Details After Order           |
-| TC24  | Download Invoice After Purchase                          |
-| TC25  | Scroll Down and Verify Subscription Section              |
-| TC26  | Scroll Up Using Arrow Button and Verify Home Visibility  |
+| ID    | Test Case Description                                      |
+|-------|------------------------------------------------------------|
+| TC01  | Verify Home Page is Visible                                |
+| TC02  | Login User with Correct Credentials                        |
+| TC03  | Login User with Incorrect Credentials                      |
+| TC04  | Logout User                                                |
+| TC05  | Register User with Existing Email                          |
+| TC06  | Submit Contact Us Form                                     |
+| TC07  | Verify Test Cases Page                                     |
+| TC08  | Verify Products Page                                       |
+| TC09  | Search Product                                             |
+| TC10  | Verify Product Detail Page                                 |
+| TC11  | Add Product to Cart                                        |
+| TC12  | Add Products and Proceed to Checkout                       |
+| TC13  | Verify Address Details in Checkout Page                    |
+| TC14  | Register While Checkout                                    |
+| TC15  | Login Before Checkout                                      |
+| TC16  | Verify Product Quantity in Cart                            |
+| TC17  | Remove Products from Cart                                  |
+| TC18  | View Category Products                                     |
+| TC19  | View Brand Products                                        |
+| TC20  | Search Products and Add to Cart After Login                |
+| TC21  | Add Review on Product                                      |
+| TC22  | Add to Cart from Recommended Items                         |
+| TC23  | Verify Address and Invoice Details After Order             |
+| TC24  | Download Invoice and Verify Details After Purchase         |
+| TC25  | Scroll Down and Verify Subscription Section                |
+| TC26  | Scroll Up Using Arrow Button and Verify Home Visibility    |
+
 
 ---
 
