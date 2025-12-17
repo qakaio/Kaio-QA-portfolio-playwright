@@ -4,15 +4,7 @@ This project contains a complete automated test suite using [Playwright](https:/
 
 Built by [Kaio Garcia](https://github.com/qakaio) as part of my QA Automation portfolio.
 
-This repository uses GitHub Actions CI/CD, running daily at 09:00 and 21:00 UTC, executing all tests inside a containerized environment based on the official Playwright Docker image.
-
-Tests run inside mcr.microsoft.com/playwright:v1.53.1-noble
-
-Browsers and system dependencies are preinstalled
-
-Fully reproducible and deterministic execution
-
-No environment drift between local and CI runs
+This repository uses GitHub Actions CI/CD, running daily at 09:00 and 21:00 UTC
 
 After each execution, an HTML test report is generated and automatically published via GitHub Pages:
 
