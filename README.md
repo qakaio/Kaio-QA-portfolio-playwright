@@ -12,9 +12,9 @@ https://qakaio.github.io/Kaio-QA-portfolio-playwright/index.html
 
 
 Status:
-NOTE: FLAKY TESTS MAY APPEAR, CAUSED BY CLOUDFLARE
-![Playwright CI/CD](https://github.com/qakaio/Kaio-QA-portfolio-playwright/actions/workflows/playwright.yml/badge.svg)
 
+![Playwright CI/CD](https://github.com/qakaio/Kaio-QA-portfolio-playwright/actions/workflows/playwright.yml/badge.svg)
+NOTE: FLAKY TESTS MAY APPEAR, CAUSED BY CLOUDFLARE
 ---
 
 ## 🚀 Tech Stack
