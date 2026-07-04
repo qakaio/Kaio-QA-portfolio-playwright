@@ -5,20 +5,41 @@ module.exports = defineConfig({
   testDir: './tests',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: 1,
-  timeout: 60000,
+  retries: process.env.CI ? 3 : 0,
+  workers: process.env.CI ? 1 : undefined,
+  timeout: 120000,
   expect: {
-    timeout: 15000
+    timeout: 30000
   },
-  reporter: 'html',
+  reporter: process.env.CI ? [['html', { outputFolder: 'playwright-report', open: 'never' }], ['line']] : 'html',
   use: {
+    baseURL: 'https://automationexercise.com',
     trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+    actionTimeout: 30000,
+    navigationTimeout: 60000,
+    // Handle Cloudflare challenges
+    extraHTTPHeaders: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    },
   },
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { 
+        ...devices['Desktop Chrome'],
+        launchOptions: {
+          args: [
+            '--disable-blink-features=AutomationControlled',
+            '--disable-dev-shm-usage',
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-web-security',
+            '--disable-features=IsolateOrigins,site-per-process',
+          ]
+        }
+      },
     },
     {
       name: 'firefox',
