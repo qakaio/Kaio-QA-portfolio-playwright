@@ -158,9 +158,9 @@ npx playwright test --retries=2 --trace=on-first-retry
 
 | Browser | Status | Notes |
 |---------|--------|-------|
-| **Chromium** (Chrome/Edge) | ✅ Passing | Primary target |
-| **Firefox** | ✅ Passing | Full support |
-| **WebKit** (Safari) | ✅ Passing | Full support |
+| **Chromium** (Chrome/Edge) | ⚠️ **Local Only** | Cloudflare blocks GitHub Actions IPs. Works locally. |
+| **Firefox** | ✅ Passing | Full support (CI + Local) |
+| **WebKit** (Safari) | ✅ Passing | Full support (CI + Local) |
 
 Run on specific browser:
 ```bash
