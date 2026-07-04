@@ -1,14 +1,70 @@
 {
-  "name": "tests",
+  "name": "kaio-qa-portfolio-playwright",
   "version": "1.0.0",
-  "description": "",
-  "main": "test.js",
-  "scripts": {},
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "Complete Playwright + JavaScript test automation framework for AutomationExercise e-commerce site. Includes CI/CD with GitHub Actions, Page Object Model, cross-browser testing, and HTML reporting.",
+  "author": "Kaio Garcia <kaioqa@protonmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qakaio/Kaio-QA-portfolio-playwright.git"
+  },
+  "homepage": "https://qakaio.github.io/Kaio-QA-portfolio-playwright/",
+  "bugs": {
+    "url": "https://github.com/qakaio/Kaio-QA-portfolio-playwright/issues"
+  },
+  "keywords": [
+    "playwright",
+    "test-automation",
+    "qa-automation",
+    "e2e-testing",
+    "automationexercise",
+    "ci-cd",
+    "github-actions"
+  ],
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:report": "playwright show-report",
+    "test:ci": "playwright test --retries=2 --trace=on-first-retry",
+    "install:browsers": "playwright install --with-deps",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix"
+  },
   "devDependencies": {
     "@playwright/test": "^1.53.1",
-    "@types/node": "^24.0.3"
+    "@types/node": "^24.0.3",
+    "eslint": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "playwright": {
+    "testDir": "./tests",
+    "testMatch": "**/*.spec.js",
+    "timeout": 30000,
+    "retries": 2,
+    "workers": "50%",
+    "reporter": [
+      ["html", { "outputFolder": "playwright-report", "open": "never" }],
+      ["line"]
+    ],
+    "use": {
+      "baseURL": "https://automationexercise.com",
+      "trace": "on-first-retry",
+      "screenshot": "only-on-failure",
+      "video": "retain-on-failure",
+      "actionTimeout": 15000,
+      "navigationTimeout": 30000
+    },
+    "projects": [
+      { "name": "chromium", "use": { "browserName": "chromium" } },
+      { "name": "firefox", "use": { "browserName": "firefox" } },
+      { "name": "webkit", "use": { "browserName": "webkit" } }
+    ]
   }
 }

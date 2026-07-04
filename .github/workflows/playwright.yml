@@ -1,39 +1,132 @@
 name: Playwright CI/CD
 
 on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
   schedule:
-    - cron: "0 9,21 * * *"
+    # Daily at 09:00 and 21:00 UTC
+    - cron: '0 9,21 * * *'
   workflow_dispatch:
+    inputs:
+      browser:
+        description: 'Browser to run tests on'
+        required: false
+        type: choice
+        options:
+          - all
+          - chromium
+          - firefox
+          - webkit
+        default: 'all'
+
+env:
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
 
 jobs:
   test:
+    name: Playwright Tests (${{ matrix.browser }})
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+        include:
+          - browser: chromium
+            project: chromium
+          - browser: firefox
+            project: firefox
+          - browser: webkit
+            project: webkit
 
     steps:
-    - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 20
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
-    - run: npm install -g npm@latest
+      - name: Install dependencies
+        run: npm ci
 
-    - run: npm install
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps ${{ matrix.project }}
 
-    - run: npx playwright@latest install --with-deps
+      - name: Run Playwright tests
+        run: npx playwright test --project=${{ matrix.project }} --retries=2 --trace=on-first-retry
+        env:
+          PLAYWRIGHT_BASE_URL: https://automationexercise.com
 
-    - run: npx playwright install
+      - name: Upload HTML Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.project }}
+          path: playwright-report/
+          retention-days: 7
 
-    - name: Run Playwright tests
-      run: npx playwright test --reporter=html
-      continue-on-error: true
+      - name: Upload Traces (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traces-${{ matrix.project }}
+          path: test-results/
+          retention-days: 7
 
-    - uses: actions/upload-artifact@v4
-      with:
-        name: playwright-report
-        path: playwright-report
+      - name: Upload Screenshots (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-${{ matrix.project }}
+          path: test-results/**/*.png
+          retention-days: 7
 
-    - uses: peaceiris/actions-gh-pages@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: playwright-report
+  report:
+    name: Merge & Deploy Report
+    needs: test
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download all reports
+        uses: actions/download-artifact@v4
+        with:
+          pattern: playwright-report-*
+          path: all-reports/
+          merge-multiple: true
+
+      - name: Merge reports
+        run: |
+          npx playwright merge-reports --reporter=html ./all-reports
+
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./playwright-report
+          destination_dir: Kaio-QA-portfolio-playwright
+          keep_files: true
+
+  notify:
+    name: Notify on Failure
+    needs: [test, report]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send failure notification
+        run: |
+          echo "❌ Playwright tests failed!"
+          echo "Repository: ${{ github.repository }}"
+          echo "Workflow: ${{ github.workflow }}"
+          echo "Run: ${{ github.run_id }}"
+          echo "Check: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
