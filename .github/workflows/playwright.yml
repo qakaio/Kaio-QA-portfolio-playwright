@@ -13,6 +13,9 @@ on:
       browser:
         description: 'Browser to run tests on'
         required: false
+        browser:
+        description: 'Browser to run tests on'
+        required: false
         type: choice
         options:
           - all
@@ -23,6 +26,7 @@ on:
 
 env:
   PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+  PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH: /snap/bin/chromium
 
 jobs:
   test:
@@ -55,12 +59,20 @@ jobs:
         run: npm ci
 
       - name: Install Playwright browsers
+        if: matrix.browser != 'chromium'
         run: npx playwright install --with-deps ${{ matrix.project }}
+
+      - name: Setup Chromium (system)
+        if: matrix.browser == 'chromium'
+        run: |
+          sudo apt-get update && sudo apt-get install -y chromium-browser
+          echo "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=$(which chromium)" >> $GITHUB_ENV
 
       - name: Run Playwright tests
         run: npx playwright test --project=${{ matrix.project }} --retries=2 --trace=on-first-retry
         env:
           PLAYWRIGHT_BASE_URL: https://automationexercise.com
+          PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH: ${{ env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH }}
 
       - name: Upload HTML Report
         if: always()
