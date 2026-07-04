@@ -42,29 +42,5 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  },
-  "playwright": {
-    "testDir": "./tests",
-    "testMatch": "**/*.spec.js",
-    "timeout": 30000,
-    "retries": 2,
-    "workers": "50%",
-    "reporter": [
-      ["html", { "outputFolder": "playwright-report", "open": "never" }],
-      ["line"]
-    ],
-    "use": {
-      "baseURL": "https://automationexercise.com",
-      "trace": "on-first-retry",
-      "screenshot": "only-on-failure",
-      "video": "retain-on-failure",
-      "actionTimeout": 15000,
-      "navigationTimeout": 30000
-    },
-    "projects": [
-      { "name": "chromium", "use": { "browserName": "chromium" } },
-      { "name": "firefox", "use": { "browserName": "firefox" } },
-      { "name": "webkit", "use": { "browserName": "webkit" } }
-    ]
   }
 }
