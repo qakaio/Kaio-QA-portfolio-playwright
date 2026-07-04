@@ -13,9 +13,6 @@ on:
       browser:
         description: 'Browser to run tests on'
         required: false
-        browser:
-        description: 'Browser to run tests on'
-        required: false
         type: choice
         options:
           - all
@@ -26,7 +23,6 @@ on:
 
 env:
   PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
-  PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH: /snap/bin/chromium
 
 jobs:
   test:
