@@ -84,7 +84,7 @@ jobs:
           retention-days: 7
 
   report:
-    name: Merge & Deploy Report
+    name: Deploy Report
     needs: test
     if: always()
     runs-on: ubuntu-latest
@@ -94,29 +94,32 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Download all reports
+      - name: Download Firefox report
         uses: actions/download-artifact@v4
         with:
-          pattern: playwright-report-*
-          path: all-reports/
-          merge-multiple: true
+          name: playwright-report-firefox
+          path: report-firefox
+          if-no-files-found: ignore
 
-      - name: Merge reports
-        run: |
-          npx playwright merge-reports --reporter=html ./all-reports
+      - name: Download WebKit report
+        uses: actions/download-artifact@v4
+        with:
+          name: playwright-report-webkit
+          path: report-webkit
+          if-no-files-found: ignore
 
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./playwright-report
+          publish_dir: ./report-firefox
           destination_dir: Kaio-QA-portfolio-playwright
           keep_files: true
 
   notify:
     name: Notify on Failure
-    needs: [test, report]
+    needs: test
     if: failure()
     runs-on: ubuntu-latest
     steps:
