@@ -16,7 +16,6 @@ on:
         type: choice
         options:
           - all
-          - chromium
           - firefox
           - webkit
         default: 'all'
@@ -32,10 +31,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browser: [chromium, firefox, webkit]
+        browser: [firefox, webkit]
         include:
-          - browser: chromium
-            project: chromium
           - browser: firefox
             project: firefox
           - browser: webkit
@@ -55,20 +52,12 @@ jobs:
         run: npm ci
 
       - name: Install Playwright browsers
-        if: matrix.browser != 'chromium'
         run: npx playwright install --with-deps ${{ matrix.project }}
-
-      - name: Setup Chromium (system)
-        if: matrix.browser == 'chromium'
-        run: |
-          sudo apt-get update && sudo apt-get install -y chromium-browser
-          echo "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=$(which chromium)" >> $GITHUB_ENV
 
       - name: Run Playwright tests
         run: npx playwright test --project=${{ matrix.project }} --retries=2 --trace=on-first-retry
         env:
           PLAYWRIGHT_BASE_URL: https://automationexercise.com
-          PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH: ${{ env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH }}
 
       - name: Upload HTML Report
         if: always()
