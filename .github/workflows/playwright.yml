@@ -100,13 +100,6 @@ jobs:
           path: report-firefox
           if-no-files-found: ignore
 
-      - name: Download WebKit report
-        uses: actions/download-artifact@v4
-        with:
-          name: playwright-report-webkit
-          path: report-webkit
-          if-no-files-found: ignore
-
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
         uses: peaceiris/actions-gh-pages@v3
