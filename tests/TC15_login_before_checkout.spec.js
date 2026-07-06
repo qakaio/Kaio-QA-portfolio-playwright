@@ -1,8 +1,12 @@
+const { skipIfCloudflareBlocked } = require('../utils');
 const { test, expect } = require('./fixtures');
 const { LoginHelper, getTestUser, baseURL } = require('../utils');
 
 test('TC15 - Login before checkout and place order', async ({ page }) => {
   await page.goto(baseURL + '/products', { waitUntil: 'domcontentloaded' });
+  await test.step("Verifica Cloudflare", async () => {
+    await skipIfCloudflareBlocked(page, test.info().title);
+  });
   await page.click('a[href="/product_details/1"]');
   await page.click('button.cart');
   const addedModal = page.locator('text=Added!');
@@ -16,6 +20,9 @@ test('TC15 - Login before checkout and place order', async ({ page }) => {
   await expect(page.locator('tr:has-text("Blue Top")')).toBeVisible();
 
   await page.goto(baseURL + '/login', { waitUntil: 'domcontentloaded' });
+  await test.step("Verifica Cloudflare", async () => {
+    await skipIfCloudflareBlocked(page, test.info().title);
+  });
   const user = getTestUser();
   const loginHelper = new LoginHelper(page);
   await loginHelper.login(user.email, user.password);

@@ -1,8 +1,12 @@
+const { skipIfCloudflareBlocked } = require('../utils');
 const { test, expect } = require('./fixtures');
 const { LoginHelper, getTestUser, baseURL } = require('../utils');
 
 test('TC20 - Search product, add to cart, then login', async ({ page }) => {
   await page.goto(baseURL + '/products', { waitUntil: 'domcontentloaded' });
+  await test.step("Verifica Cloudflare", async () => {
+    await skipIfCloudflareBlocked(page, test.info().title);
+  });
   await page.fill('input[name="search"]', 'Dress');
   await page.click('button[type="button"]');
   await page.click('a[data-product-id="3"]');

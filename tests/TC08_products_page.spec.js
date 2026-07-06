@@ -1,8 +1,12 @@
+const { skipIfCloudflareBlocked } = require('../utils');
 const { test, expect } = require('./fixtures');
 const { baseURL } = require('../utils');
 
 test('TC08 - All products page is visible', async ({ page }) => {
   await page.goto(baseURL);
+  await test.step("Verifica Cloudflare", async () => {
+    await skipIfCloudflareBlocked(page, test.info().title);
+  });
   await page.locator('a[href="/products"]').scrollIntoViewIfNeeded();
   await page.click('a[href="/products"]');
   await expect(page).toHaveURL(/\/products/);

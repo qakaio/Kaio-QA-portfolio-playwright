@@ -1,8 +1,12 @@
+const { skipIfCloudflareBlocked } = require('../utils');
 const { test, expect } = require('./fixtures');
 const { baseURL } = require('../utils');
 
 test('TC05 - Register with existing email', async ({ page }) => {
   await page.goto(baseURL + '/login', { waitUntil: 'domcontentloaded' });
+  await test.step("Verifica Cloudflare", async () => {
+    await skipIfCloudflareBlocked(page, test.info().title);
+  });
   await page.fill('[data-qa="signup-name"]', 'Kaio');
   await page.fill('[data-qa="signup-email"]', 'kaioqa@test.com');
   await page.click('[data-qa="signup-button"]');

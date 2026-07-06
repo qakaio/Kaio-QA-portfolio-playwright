@@ -1,8 +1,12 @@
+const { skipIfCloudflareBlocked } = require('../utils');
 const { test, expect } = require('./fixtures');
 const { baseURL } = require('../utils');
 
 test('TC22 - Add to cart from Recommended items', async ({ page }) => {
   await page.goto(baseURL + '/');
+  await test.step("Verifica Cloudflare", async () => {
+    await skipIfCloudflareBlocked(page, test.info().title);
+  });
   await page.evaluate(() => window.scrollBy(0, document.body.scrollHeight));
   await page.waitForSelector('.recommended_items');
   await page.click('.recommended_items .add-to-cart');

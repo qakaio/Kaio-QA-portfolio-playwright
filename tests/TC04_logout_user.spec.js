@@ -1,8 +1,12 @@
+const { skipIfCloudflareBlocked } = require('../utils');
 const { test, expect } = require('./fixtures');
 const { LoginHelper, getTestUser, baseURL } = require('../utils');
 
 test('TC04 - Logout user', async ({ page }) => {
   await page.goto(baseURL, { waitUntil: 'domcontentloaded' });
+  await test.step("Verifica Cloudflare", async () => {
+    await skipIfCloudflareBlocked(page, test.info().title);
+  });
   const user = getTestUser();
   const loginHelper = new LoginHelper(page);
   await page.click('a[href="/login"]');

@@ -1,8 +1,12 @@
+const { skipIfCloudflareBlocked } = require('../utils');
 const { test, expect } = require('./fixtures');
 const { baseURL } = require('../utils');
 
 test('TC24 - Download invoice with new user', async ({ page, browserName, context }) => {
   await page.goto(baseURL + '/signup');
+  await test.step("Verifica Cloudflare", async () => {
+    await skipIfCloudflareBlocked(page, test.info().title);
+  });
   const email = `kaioqa+${Date.now()}@test.com`;
 
   await page.fill('input[data-qa="signup-name"]', 'Kaio QA');
@@ -33,6 +37,9 @@ test('TC24 - Download invoice with new user', async ({ page, browserName, contex
   await page.waitForSelector('a[href="/logout"]', { timeout: 30000 });
 
   await page.goto(baseURL + '/products');
+  await test.step("Verifica Cloudflare", async () => {
+    await skipIfCloudflareBlocked(page, test.info().title);
+  });
   await page.click('a[href="/product_details/1"]');
   await page.click('button.cart');
 

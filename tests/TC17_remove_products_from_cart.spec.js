@@ -1,8 +1,12 @@
+const { skipIfCloudflareBlocked } = require('../utils');
 const { test, expect } = require('./fixtures');
 const { baseURL } = require('../utils');
 
 test('TC17 - Remove product from cart', async ({ page }) => {
   await page.goto(baseURL);
+  await test.step("Verifica Cloudflare", async () => {
+    await skipIfCloudflareBlocked(page, test.info().title);
+  });
   await page.click('a[href="/products"]');
   await page.click('a[data-product-id="1"]');
   await page.click('u:has-text("View Cart")');

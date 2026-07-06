@@ -1,3 +1,4 @@
+const { skipIfCloudflareBlocked } = require('../utils');
 const { test, expect } = require('./fixtures');
 const fs = require('fs');
 const path = require('path');
@@ -9,6 +10,9 @@ test('TC06 - Submit contact form with working file upload', async ({ page }) => 
   const filePath = path.join(tempDir, 'sample.txt');
   fs.writeFileSync(filePath, 'Test file content');
   await page.goto(baseURL + '/contact_us', { waitUntil: 'domcontentloaded' });
+  await test.step("Verifica Cloudflare", async () => {
+    await skipIfCloudflareBlocked(page, test.info().title);
+  });
   await page.fill('[data-qa="name"]', 'Kaio');
   await page.fill('[data-qa="email"]', 'kaioqa@test.com');
   await page.fill('[data-qa="subject"]', 'Contact');

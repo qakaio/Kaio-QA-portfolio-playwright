@@ -1,12 +1,19 @@
+const { skipIfCloudflareBlocked } = require('../utils');
 const { test, expect } = require('./fixtures');
 const { LoginHelper, getTestUser, baseURL } = require('../utils');
 
 test('TC23 - Verify address details in checkout page', async ({ page }) => {
   await page.goto(baseURL + '/login', { waitUntil: 'domcontentloaded' });
+  await test.step("Verifica Cloudflare", async () => {
+    await skipIfCloudflareBlocked(page, test.info().title);
+  });
   const user = getTestUser();
   const loginHelper = new LoginHelper(page);
   await loginHelper.login(user.email, user.password);
   await page.goto(baseURL + '/products', { waitUntil: 'domcontentloaded' });
+  await test.step("Verifica Cloudflare", async () => {
+    await skipIfCloudflareBlocked(page, test.info().title);
+  });
   await page.locator('.product-image-wrapper').first().hover();
   await page.click('a[data-product-id="1"]');
   await expect(page.locator('#cartModal')).toBeVisible();
