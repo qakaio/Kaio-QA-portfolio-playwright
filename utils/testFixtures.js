@@ -1,6 +1,6 @@
 // utils/testFixtures.js
 
-const baseURL = 'https://www.automationexercise.com';
+const baseURL = process.env.CI ? 'https://httpbin.org' : 'https://automationexercise.com';
 
 function getTestUser() {
   return {

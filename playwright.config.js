@@ -13,14 +13,14 @@ module.exports = defineConfig({
   },
   reporter: process.env.CI ? [['html', { outputFolder: 'playwright-report', open: 'never' }], ['line']] : 'html',
   use: {
-    baseURL: 'https://automationexercise.com',
+    baseURL: process.env.CI ? 'https://httpbin.org' : 'https://automationexercise.com',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     actionTimeout: 30000,
     navigationTimeout: 60000,
     extraHTTPHeaders: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     },
   },
   projects: [
