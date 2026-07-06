@@ -38,15 +38,30 @@ module.exports = defineConfig({
             '--disable-features=IsolateOrigins,site-per-process',
           ]
         }
-      },
+      }
     },
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: { 
+        ...devices['Desktop Firefox'],
+        launchOptions: {
+          firefoxUserPrefs: {
+            'dom.webdriver.enabled': false,
+            'media.navigator.enabled': false,
+          }
+        }
+      }
     },
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: { 
+        ...devices['Desktop Safari'],
+        launchOptions: {
+          args: [
+            '--disable-blink-features=AutomationControlled',
+          ]
+        }
+      }
     },
   ],
 });
