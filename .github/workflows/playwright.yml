@@ -57,6 +57,11 @@ jobs:
         env:
           CI: true
 
+      - name: Run Playwright auth + checkout tests (skipped if Cloudflare blocks)
+        run: npx playwright test TC02_login_user_correct.spec.js TC15_login_before_checkout.spec.js --project=${{ matrix.project }} --retries=2 --trace=on-first-retry
+        env:
+          CI: true
+
       - name: Upload HTML Report
         if: always()
         uses: actions/upload-artifact@v4
