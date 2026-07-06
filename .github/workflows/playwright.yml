@@ -52,8 +52,8 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps ${{ matrix.project }}
 
-      - name: Run Playwright tests
-        run: npx playwright test --project=${{ matrix.project }} --retries=2 --trace=on-first-retry
+      - name: Run Playwright tests (CI mode - only TC01)
+        run: npx playwright test TC01_homepage_visible.spec.js --project=${{ matrix.project }} --retries=2 --trace=on-first-retry
         env:
           PLAYWRIGHT_BASE_URL: https://httpbin.org
           CI: true

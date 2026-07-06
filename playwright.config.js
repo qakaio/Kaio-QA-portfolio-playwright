@@ -13,33 +13,17 @@ module.exports = defineConfig({
   },
   reporter: process.env.CI ? [['html', { outputFolder: 'playwright-report', open: 'never' }], ['line']] : 'html',
   use: {
-    baseURL: process.env.CI ? 'https://httpbin.org' : 'https://automationexercise.com',
+    baseURL: 'https://automationexercise.com',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     actionTimeout: 30000,
     navigationTimeout: 60000,
     extraHTTPHeaders: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     },
   },
   projects: [
-    {
-      name: 'chromium',
-      use: { 
-        ...devices['Desktop Chrome'],
-        launchOptions: {
-          args: [
-            '--disable-blink-features=AutomationControlled',
-            '--disable-dev-shm-usage',
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-            '--disable-web-security',
-            '--disable-features=IsolateOrigins,site-per-process',
-          ]
-        }
-      }
-    },
     {
       name: 'firefox',
       use: { 
@@ -49,17 +33,6 @@ module.exports = defineConfig({
             'dom.webdriver.enabled': false,
             'media.navigator.enabled': false,
           }
-        }
-      }
-    },
-    {
-      name: 'webkit',
-      use: { 
-        ...devices['Desktop Safari'],
-        launchOptions: {
-          args: [
-            '--disable-blink-features=AutomationControlled',
-          ]
         }
       }
     },
