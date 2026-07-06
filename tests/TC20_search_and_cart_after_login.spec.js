@@ -1,11 +1,15 @@
-const { skipIfCloudflareBlocked } = require('../utils');
+const { shouldSkipCloudflare } = require('../utils');
 const { test, expect } = require('./fixtures');
 const { LoginHelper, getTestUser, baseURL } = require('../utils');
 
 test('TC20 - Search product, add to cart, then login', async ({ page }) => {
   await page.goto(baseURL + '/products', { waitUntil: 'domcontentloaded' });
-  await test.step("Verifica Cloudflare", async () => {
-    await skipIfCloudflareBlocked(page, test.info().title);
+  const { shouldSkip } = await shouldSkipCloudflare(page, test.info().title);
+  if (shouldSkip) {
+    test.skip(true, 'Bloqueado pelo CloudFlare WAF');
+    return;
+  }
+      }
   });
   await page.fill('input[name="search"]', 'Dress');
   await page.click('button[type="button"]');

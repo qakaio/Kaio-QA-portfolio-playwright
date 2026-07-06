@@ -3,7 +3,7 @@
 const { LoginHelper } = require('./loginhelper');
 const { baseURL, getTestUser } = require('./testFixtures');
 const { addProductToCart, removeProductFromCart } = require('./pageActions');
-const { isCloudflareBlocked, skipIfCloudflareBlocked } = require('./cloudflareHelper');
+const { checkCloudflare, shouldSkipCloudflare } = require('./cloudflareHelper');
 
 module.exports = {
   LoginHelper,
@@ -11,6 +11,6 @@ module.exports = {
   getTestUser,
   addProductToCart,
   removeProductFromCart,
-  isCloudflareBlocked,
-  skipIfCloudflareBlocked,
+  checkCloudflare,
+  shouldSkipCloudflare,
 };

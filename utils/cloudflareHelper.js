@@ -15,43 +15,6 @@ const CLOUDFLARE_INDICATORS = [
 /**
  * Verifica se a página atual foi bloqueada pelo Cloudflare
  * @param {import('@playwright/test').Page} page
- * @returns {Promise<boolean>}
- */
-async function isCloudflareBlocked(page) {
-  try {
-    // Verifica indicadores visuais
-    for (const indicator of CLOUDFLARE_INDICATORS) {
-      const isVisible = await page.locator(`text=${indicator}`).first().isVisible({ timeout: 3000 }).catch(() => false);
-      if (isVisible) return true;
-    }
-
-    // Verifica status code 403/503 via resposta de navegação
-    const response = await page.mainFrame().waitForNavigation({ timeout: 5000 }).catch(() => null);
-    if (response && [403, 503].includes(response.status())) {
-      return true;
-    }
-
-    // Verifica title da página
-    const title = await page.title().catch(() => '');
-    if (title.includes('Cloudflare') || title.includes('Access denied') || title.includes('Just a moment')) {
-      return true;
-    }
-
-    // Verifica se há challenge do Cloudflare no body
-    const bodyText = await page.locator('body').innerText().catch(() => '');
-    if (bodyText.includes('Cloudflare') && (bodyText.includes('challenge') || bodyText.includes('Ray ID'))) {
-      return true;
-    }
-
-    return false;
-  } catch {
-    return false;
-  }
-}
-
-/**
- * Verifica se a página atual foi bloqueada pelo Cloudflare e loga detalhes
- * @param {import('@playwright/test').Page} page
  * @returns {Promise<{blocked: boolean, reason: string}>}
  */
 async function checkCloudflare(page) {
@@ -98,12 +61,13 @@ async function checkCloudflare(page) {
 }
 
 /**
- * Verifica Cloudflare e faz skip do teste se bloqueado
- * Deve ser chamado DENTRO de um test()
+ * Verifica Cloudflare e retorna se deve skip
+ * O TESTE deve chamar test.skip() se retornar true
  * @param {import('@playwright/test').Page} page
  * @param {string} testName - Nome do teste para log
+ * @returns {Promise<{shouldSkip: boolean, reason: string}>}
  */
-async function skipIfCloudflareBlocked(page, testName) {
+async function shouldSkipCloudflare(page, testName) {
   const result = await checkCloudflare(page);
   
   if (result.blocked) {
@@ -111,9 +75,9 @@ async function skipIfCloudflareBlocked(page, testName) {
     console.log(`   Motivo: ${result.reason}`);
     console.log(`   IP do GitHub Actions bloqueado pelo CloudFlare WAF.`);
     console.log(`   Teste roda normalmente em ambiente local.\n`);
-    // Usa test.skip() do Playwright - marca como "skipped" no relatório
-    test.skip(true, `Bloqueado pelo CloudFlare WAF: ${result.reason}`);
+    return { shouldSkip: true, reason: result.reason };
   }
+  return { shouldSkip: false, reason: '' };
 }
 
-module.exports = { isCloudflareBlocked, skipIfCloudflareBlocked, checkCloudflare, CLOUDFLARE_INDICATORS };
+module.exports = { checkCloudflare, shouldSkipCloudflare, CLOUDFLARE_INDICATORS };

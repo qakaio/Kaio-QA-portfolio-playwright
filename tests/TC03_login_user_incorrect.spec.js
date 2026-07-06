@@ -1,11 +1,15 @@
-const { skipIfCloudflareBlocked } = require('../utils');
+const { shouldSkipCloudflare } = require('../utils');
 const { test, expect } = require('./fixtures');
 const { baseURL } = require('../utils');
 
 test('TC03 - Login with invalid credentials', async ({ page }) => {
   await page.goto(baseURL + '/login');
-  await test.step("Verifica Cloudflare", async () => {
-    await skipIfCloudflareBlocked(page, test.info().title);
+  const { shouldSkip } = await shouldSkipCloudflare(page, test.info().title);
+  if (shouldSkip) {
+    test.skip(true, 'Bloqueado pelo CloudFlare WAF');
+    return;
+  }
+      }
   });
   await page.fill('input[data-qa="login-email"]', 'wrong@email.com');
   await page.fill('input[data-qa="login-password"]', 'wrongpass');
