@@ -7,7 +7,8 @@ test.describe('CI Smoke Tests - httpbin.org', () => {
   });
 
   test('GET /get returns JSON with args', async ({ page }) => {
-    const response = await page.goto('https://httpbin.org/get?test=ci&value=123');
+    const response = await page.request.get('https://httpbin.org/get?test=ci&value=123');
+    expect(response.ok()).toBeTruthy();
     const json = await response.json();
     expect(json.args.test).toBe('ci');
     expect(json.args.value).toBe('123');
@@ -18,12 +19,13 @@ test.describe('CI Smoke Tests - httpbin.org', () => {
       data: { test: 'playwright', timestamp: Date.now() },
       headers: { 'Content-Type': 'application/json' }
     });
+    expect(response.ok()).toBeTruthy();
     const json = await response.json();
     expect(json.json.test).toBe('playwright');
   });
 
   test('GET /status/200 returns 200', async ({ page }) => {
-    const response = await page.goto('https://httpbin.org/status/200');
+    const response = await page.request.get('https://httpbin.org/status/200');
     expect(response.status()).toBe(200);
   });
 
@@ -31,12 +33,14 @@ test.describe('CI Smoke Tests - httpbin.org', () => {
     const response = await page.request.get('https://httpbin.org/headers', {
       headers: { 'X-Custom-Header': 'playwright-ci-test' }
     });
+    expect(response.ok()).toBeTruthy();
     const json = await response.json();
     expect(json.headers['X-Custom-Header']).toBe('playwright-ci-test');
   });
 
   test('GET /user-agent returns user agent', async ({ page }) => {
     const response = await page.request.get('https://httpbin.org/user-agent');
+    expect(response.ok()).toBeTruthy();
     const json = await response.json();
     expect(json['user-agent']).toContain('Playwright');
   });
