@@ -1,5 +1,9 @@
 # 🧪 AutomationExercise Test Suite (Playwright + JavaScript)
 
+![Playwright Tests](https://github.com/qakaio/Kaio-QA-portfolio-playwright/actions/workflows/playwright.yml/badge.svg)
+
+# 🧪 AutomationExercise Test Suite (Playwright + JavaScript)
+
 Complete automated test suite using [Playwright](https://playwright.dev/) with JavaScript, covering **26 Test Cases** from [AutomationExercise](https://www.automationexercise.com/) e-commerce demo site.
 
 Built by [Kaio Garcia](https://github.com/qakaio) — QA Engineer
@@ -112,6 +116,9 @@ Based on official [AutomationExercise Test Cases](https://www.automationexercise
 ---
 
 ## 🛡 Cloudflare Protection Handling
+
+> **Note:** CI runs smoke tests only (6 tests on automationexercise.com). Full 26-test suite runs locally. See [CI/CD Pipeline](#-ci/cd-pipeline-github-actions) for details.
+
 
 The target site (automationexercise.com) uses Cloudflare WAF which blocks GitHub Actions IPs. This project implements **graceful skip**:
 
