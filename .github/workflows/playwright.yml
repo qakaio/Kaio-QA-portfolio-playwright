@@ -32,14 +32,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browser: [chromium, firefox, webkit]
+        browser: [chromium, firefox]
         include:
           - browser: chromium
             project: chromium
           - browser: firefox
             project: firefox
-          - browser: webkit
-            project: webkit
 
     steps:
       - name: Checkout repository
@@ -111,19 +109,11 @@ jobs:
           path: report-firefox
           if-no-files-found: ignore
 
-      - name: Download WebKit report
-        uses: actions/download-artifact@v4
-        with:
-          name: playwright-report-webkit
-          path: report-webkit
-          if-no-files-found: ignore
-
       - name: Merge reports
         run: |
           mkdir -p merged-report
           cp -r report-chromium/* merged-report/ 2>/dev/null || true
           cp -r report-firefox/* merged-report/ 2>/dev/null || true
-          cp -r report-webkit/* merged-report/ 2>/dev/null || true
 
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
