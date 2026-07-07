@@ -25,6 +25,22 @@ module.exports = defineConfig({
   },
   projects: [
     {
+      name: 'chromium',
+      use: { 
+        ...devices['Desktop Chrome'],
+        launchOptions: {
+          args: [
+            '--disable-blink-features=AutomationControlled',
+            '--disable-dev-shm-usage',
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-web-security',
+            '--disable-features=IsolateOrigins,site-per-process',
+          ]
+        }
+      }
+    },
+    {
       name: 'firefox',
       use: { 
         ...devices['Desktop Firefox'],
@@ -33,6 +49,17 @@ module.exports = defineConfig({
             'dom.webdriver.enabled': false,
             'media.navigator.enabled': false,
           }
+        }
+      }
+    },
+    {
+      name: 'webkit',
+      use: { 
+        ...devices['Desktop Safari'],
+        launchOptions: {
+          args: [
+            '--disable-blink-features=AutomationControlled',
+          ]
         }
       }
     },
