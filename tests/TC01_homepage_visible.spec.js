@@ -1,23 +1,19 @@
 const { test, expect } = require('./fixtures');
-const { baseURL, skipIfCloudflareBlocked } = require('../utils');
+const { LoginHelper, getTestUser, baseURL } = require('../utils');
+const { checkCloudflare } = require('../utils');
 
-test('TC01 - Home page is visible', async ({ page }) => {
-  // Use httpbin.org for CI (reliable), automationexercise.com for local
-  const testURL = process.env.CI ? 'https://httpbin.org/html' : baseURL + '/';
+test('TC01_homepage_visible', async ({ page }) => {
+  await page.goto(baseURL);
   
-  await page.goto(testURL, { waitUntil: 'domcontentloaded', timeout: 60000 });
-  await page.waitForLoadState('networkidle', { timeout: 60000 });
-  
-  // Se Cloudflare bloquear, pula o teste com mensagem explicativa
-  await test.step('Verifica Cloudflare', async () => {
-    await skipIfCloudflareBlocked(page, 'TC01 - Home page visible');
-  });
-  
-  // For httpbin.org, check for HTML content
-  if (process.env.CI) {
-    await expect(page.locator('html')).toContainText('Herman Melville', { timeout: 30000 });
-  } else {
-    // Local test - check for AutomationExercise home page
-    await expect(page.locator('html')).toContainText('Home', { timeout: 30000 });
+  // Cloudflare check - must be at start of test
+  const cfResult = await checkCloudflare(page);
+  if (cfResult.blocked) {
+    console.log(`\n⚠️  [TC01_homepage_visible] TESTE PULADO: Bloqueado pelo CloudFlare (WAF)`);
+    console.log(`   Motivo: ${cfResult.reason}`);
+    console.log(`   IP do GitHub Actions bloqueado pelo CloudFlare WAF.`);
+    console.log(`   Teste roda normalmente em ambiente local.\n`);
+    test.skip(true, `Bloqueado pelo CloudFlare WAF: ${cfResult.reason}`);
   }
+  
+  await expect(page.locator('html')).toContainText('Home');
 });

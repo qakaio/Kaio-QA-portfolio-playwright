@@ -1,13 +1,18 @@
 const { test, expect } = require('./fixtures');
-const { LoginHelper, getTestUser, baseURL, shouldSkipCloudflare } = require('../utils');
+const { LoginHelper, getTestUser, baseURL } = require('../utils');
+const { checkCloudflare } = require('../utils');
 
 test('TC02 - Login with valid credentials', async ({ page }) => {
   await page.goto(baseURL);
   
-  const { shouldSkip } = await shouldSkipCloudflare(page, test.info().title);
-  if (shouldSkip) {
-    test.skip(true, 'Bloqueado pelo CloudFlare WAF');
-    return;
+  // Cloudflare check - must be at start of test
+  const cfResult = await checkCloudflare(page);
+  if (cfResult.blocked) {
+    console.log(`\n⚠️  [TC02 - Login with valid credentials] TESTE PULADO: Bloqueado pelo CloudFlare (WAF)`);
+    console.log(`   Motivo: ${cfResult.reason}`);
+    console.log(`   IP do GitHub Actions bloqueado pelo CloudFlare WAF.`);
+    console.log(`   Teste roda normalmente em ambiente local.\n`);
+    test.skip(true, `Bloqueado pelo CloudFlare WAF: ${cfResult.reason}`);
   }
   
   const user = getTestUser();
