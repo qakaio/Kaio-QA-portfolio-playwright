@@ -1,16 +1,15 @@
-# 🧪 AutomationExercise Test Suite (Playwright + JavaScript)
+# AutomationExercise Test Suite (Playwright + JavaScript)
 
 ![Playwright Tests](https://github.com/qakaio/Kaio-QA-portfolio-playwright/actions/workflows/playwright.yml/badge.svg)
-
-# 🧪 AutomationExercise Test Suite (Playwright + JavaScript)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 Complete automated test suite using [Playwright](https://playwright.dev/) with JavaScript, covering **26 Test Cases** from [AutomationExercise](https://www.automationexercise.com/) e-commerce demo site.
 
-Built by [Kaio Garcia](https://github.com/qakaio) — QA Engineer
+Built by [Kaio Garcia](https://github.com/qakaio) — Senior QA Engineer
 
 ---
 
-## 📊 Project Status
+## Project Status
 
 | Metric | Status |
 |--------|--------|
@@ -23,7 +22,7 @@ Built by [Kaio Garcia](https://github.com/qakaio) — QA Engineer
 
 ---
 
-## 🚀 Tech Stack
+## Tech Stack
 
 - **Playwright** (JavaScript) — Modern browser automation
 - **Node.js** v18+ recommended
@@ -32,7 +31,7 @@ Built by [Kaio Garcia](https://github.com/qakaio) — QA Engineer
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Kaio-QA-portfolio-playwright/
@@ -80,7 +79,7 @@ Kaio-QA-portfolio-playwright/
 
 ---
 
-## ✅ Automated Test Cases (26)
+## Automated Test Cases (26)
 
 Based on official [AutomationExercise Test Cases](https://www.automationexercise.com/test_cases):
 
@@ -115,10 +114,9 @@ Based on official [AutomationExercise Test Cases](https://www.automationexercise
 
 ---
 
-## 🛡 Cloudflare Protection Handling
+## Cloudflare Protection Handling
 
-> **Note:** CI runs smoke tests only (6 tests on automationexercise.com). Full 26-test suite runs locally. See [CI/CD Pipeline](#-ci/cd-pipeline-github-actions) for details.
-
+> **Note:** CI runs smoke tests only (6 tests on automationexercise.com). Full 26-test suite runs locally. See [CI/CD Pipeline](#ci/cd-pipeline-github-actions) for details.
 
 The target site (automationexercise.com) uses Cloudflare WAF which blocks GitHub Actions IPs. This project implements **graceful skip**:
 
@@ -135,7 +133,7 @@ if (cfResult.blocked) {
 
 ---
 
-## 🛠 How to Run Locally
+## How to Run Locally
 
 ### Prerequisites
 - Node.js v18+
@@ -185,7 +183,7 @@ npx playwright test --retries=2 --trace=on-first-retry
 
 ---
 
-## 🌐 Cross-Browser Support (CI + Local)
+## Cross-Browser Support (CI + Local)
 
 | Browser | CI Status | Local Status | Notes |
 |---------|-----------|--------------|-------|
@@ -202,7 +200,7 @@ npx playwright test --project=webkit
 
 ---
 
-## 📊 Test Reports & Artifacts
+## Test Reports & Artifacts
 
 ### HTML Report (Auto-published)
 - **Live Report**: [https://qakaio.github.io/Kaio-QA-portfolio-playwright/index.html](https://qakaio.github.io/Kaio-QA-portfolio-playwright/index.html)
@@ -218,7 +216,7 @@ npx playwright test --project=webkit
 
 ---
 
-## 🛡 Quality Standards
+## Quality Standards
 
 | Standard | Implementation |
 |----------|----------------|
@@ -232,7 +230,7 @@ npx playwright test --project=webkit
 
 ---
 
-## 🎯 Known Issues & Mitigations
+## Known Issues & Mitigations
 
 | Issue | Cause | Mitigation |
 |-------|-------|------------|
@@ -242,32 +240,31 @@ npx playwright test --project=webkit
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 This is a portfolio project, but suggestions are welcome:
 1. Fork the repository
 2. Create feature branch (`git checkout -b feature/improvement`)
 3. Commit changes (`git commit -am 'Add improvement'`)
 4. Push to branch (`git push origin feature/improvement`)
-4. Open Pull Request
+5. Open Pull Request
 
 ---
 
-## 📄 License
+## License
 
 MIT License — Feel free to use as reference for your own portfolio.
 
 ---
 
-## 👤 Author
+## Author
 
-**Kaio Garcia** — QA Engineer
+**Kaio Garcia** — Senior QA Engineer  
 🔗 [GitHub](https://github.com/qakaio) • [LinkedIn](https://linkedin.com/in/kaioqa) • [Portfolio](https://qakaio.github.io)
 
 ---
 
-## 🙏 Acknowledgments
-
+## Acknowledgments
 - [AutomationExercise](https://www.automationexercise.com/) for providing the test cases and demo site
 - [Playwright Team](https://playwright.dev/) for the excellent automation framework
 - GitHub Actions & Pages for free CI/CD and hosting
