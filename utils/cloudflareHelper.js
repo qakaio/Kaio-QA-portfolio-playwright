@@ -19,7 +19,7 @@ const CLOUDFLARE_INDICATORS = [
  */
 async function checkCloudflare(page) {
   try {
-    // Verifica indicadores visuais
+    // 1. Verifica indicadores visuais
     for (const indicator of CLOUDFLARE_INDICATORS) {
       const isVisible = await page.locator(`text=${indicator}`).first().isVisible({ timeout: 3000 }).catch(() => false);
       if (isVisible) {
@@ -27,25 +27,19 @@ async function checkCloudflare(page) {
       }
     }
 
-    // Verifica status code 403/503 via resposta de navegação
-    const response = await page.mainFrame().waitForNavigation({ timeout: 5000 }).catch(() => null);
-    if (response && [403, 503].includes(response.status())) {
-      return { blocked: true, reason: `HTTP Status ${response.status()}` };
-    }
-
-    // Verifica title da página
+    // 2. Verifica title da página
     const title = await page.title().catch(() => '');
     if (title.includes('Cloudflare') || title.includes('Access denied') || title.includes('Just a moment')) {
       return { blocked: true, reason: `Title: "${title}"` };
     }
 
-    // Verifica se há challenge do Cloudflare no body
+    // 3. Verifica se há challenge do Cloudflare no body
     const bodyText = await page.locator('body').innerText().catch(() => '');
     if (bodyText.includes('Cloudflare') && (bodyText.includes('challenge') || bodyText.includes('Ray ID'))) {
       return { blocked: true, reason: 'Texto do body contém challenge Cloudflare' };
     }
 
-    // Verifica headers de resposta Cloudflare
+    // 4. Verifica headers de resposta Cloudflare via meta tag
     const cfRay = await page.evaluate(() => {
       const meta = document.querySelector('meta[name="cf-ray"]');
       return meta ? meta.content : null;
@@ -61,23 +55,23 @@ async function checkCloudflare(page) {
 }
 
 /**
- * Verifica Cloudflare e retorna se deve skip
- * O TESTE deve chamar test.skip() se retornar true
+ * Verifica Cloudflare com retry para desafios tardios
  * @param {import('@playwright/test').Page} page
- * @param {string} testName - Nome do teste para log
- * @returns {Promise<{shouldSkip: boolean, reason: string}>}
+ * @param {number} maxRetries - Número máximo de tentativas
+ * @param {number} retryDelay - Delay entre tentativas (ms)
+ * @returns {Promise<{blocked: boolean, reason: string}>}
  */
-async function shouldSkipCloudflare(page, testName) {
-  const result = await checkCloudflare(page);
-  
-  if (result.blocked) {
-    console.log(`\n⚠️  [${testName}] TESTE PULADO: Bloqueado pelo CloudFlare (WAF)`);
-    console.log(`   Motivo: ${result.reason}`);
-    console.log(`   IP do GitHub Actions bloqueado pelo CloudFlare WAF.`);
-    console.log(`   Teste roda normalmente em ambiente local.\n`);
-    return { shouldSkip: true, reason: result.reason };
+async function checkCloudflareWithRetry(page, maxRetries = 3, retryDelay = 2000) {
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    const result = await checkCloudflare(page);
+    if (result.blocked) {
+      return result;
+    }
+    if (attempt < maxRetries) {
+      await page.waitForTimeout(retryDelay);
+    }
   }
-  return { shouldSkip: false, reason: '' };
+  return { blocked: false, reason: '' };
 }
 
-module.exports = { checkCloudflare, shouldSkipCloudflare, CLOUDFLARE_INDICATORS };
+module.exports = { checkCloudflare, checkCloudflareWithRetry, CLOUDFLARE_INDICATORS };
