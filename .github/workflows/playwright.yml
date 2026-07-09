@@ -87,8 +87,9 @@ jobs:
   report:
     name: Deploy Report
     needs: test
-    if: always()
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -116,7 +117,6 @@ jobs:
           cp -r report-firefox/* merged-report/ 2>/dev/null || true
 
       - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
