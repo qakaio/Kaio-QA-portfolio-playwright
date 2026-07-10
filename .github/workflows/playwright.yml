@@ -78,6 +78,50 @@ jobs:
           path: test-results/
           retention-days: 7
 
+  allure:
+    name: Generate Allure Report
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run tests for Allure
+        run: npx playwright test ci-smoke.spec.js --project=chromium --retries=1
+        env:
+          CI: true
+          CI_BROWSERS: chromium
+          CI_SKIP_CLOUDFLARE: 'true'
+          CRITICAL_SMOKE: 'false'
+
+      - name: Generate Allure Report
+        if: always()
+        run: |
+          npx allure generate allure-results --clean -o allure-report
+        env:
+          ALLURE_RESULTS_DIR: allure-results
+
+      - name: Deploy Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report
+          destination_dir: allure-report
+          keep_files: true
+
   deploy-pages:
     name: Deploy to GitHub Pages
     needs: test
