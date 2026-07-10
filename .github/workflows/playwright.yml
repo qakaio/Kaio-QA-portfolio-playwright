@@ -58,6 +58,7 @@ jobs:
           npx playwright test ci-smoke.spec.js --project=${{ matrix.project }} --retries=2 --trace=on-first-retry
         env:
           CI: true
+          CI_BROWSERS: chromium
           CI_SKIP_CLOUDFLARE: 'true'
           CRITICAL_SMOKE: 'false'
 
