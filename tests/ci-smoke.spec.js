@@ -64,10 +64,11 @@ async function checkCloudflareOnce(pageOrBrowser) {
   }
 }
 
+// Run tests serially to ensure setup runs first
 test.describe.configure({ retries: 2 });
 
-test.describe('CI Smoke Tests - automationexercise.com', () => {
-  // Use a test that runs once per worker to check Cloudflare
+test.describe.serial('CI Smoke Tests - automationexercise.com', () => {
+  // Use a test that runs first to check Cloudflare
   test('setup: check Cloudflare', async ({ browser }) => {
     const result = await checkCloudflareOnce(browser);
     if (result.blocked) {
