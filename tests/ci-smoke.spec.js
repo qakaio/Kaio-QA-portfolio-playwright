@@ -1,8 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const { checkCloudflareWithRetry } = require('../utils/cloudflareHelper');
 
-const BASE_URL = 'https://automationexercise.com';
-
 /**
  * Decision matrix: When to skip vs when to fail
  * - SKIP: Public site with WAF (Cloudflare, Akamai, etc.) - CI runners blocked
@@ -12,66 +10,80 @@ const BASE_URL = 'https://automationexercise.com';
 const SHOULD_SKIP_ON_CLOUDFLARE = process.env.CI_SKIP_CLOUDFLARE !== 'false';
 const IS_CRITICAL_SMOKE = process.env.CRITICAL_SMOKE === 'true';
 
-async function checkCloudflareBeforeTest(page) {
+// Module-level cache for Cloudflare check result (shared across tests in same worker)
+let cloudflareCheckResult = null;
+
+async function checkCloudflareOnce(pageOrBrowser) {
+  // Check if we already have a cached result
+  if (cloudflareCheckResult !== null) {
+    return cloudflareCheckResult;
+  }
+
+  let page;
+  let shouldClosePage = false;
+  
+  if ('newPage' in pageOrBrowser) {
+    // It's a browser
+    page = await pageOrBrowser.newPage();
+    shouldClosePage = true;
+  } else {
+    // It's a page
+    page = pageOrBrowser;
+  }
+  
   try {
-    // First do a quick navigation with a short timeout to see if Cloudflare blocks
     const response = await page.goto('https://automationexercise.com/', { 
       waitUntil: 'domcontentloaded', 
       timeout: 15000 
     });
     
-    // Check response status first
     if (response && [403, 503].includes(response.status())) {
-      return { blocked: true, reason: `HTTP Status ${response.status()}` };
+      cloudflareCheckResult = { blocked: true, reason: `HTTP Status ${response.status()}` };
+      return cloudflareCheckResult;
     }
     
-    // Check for Cloudflare
     const cfResult = await checkCloudflareWithRetry(page, 3, 2000);
     if (cfResult.blocked) {
-      return { blocked: true, reason: cfResult.reason };
+      cloudflareCheckResult = { blocked: true, reason: cfResult.reason };
+      return cloudflareCheckResult;
     }
     
-    return { blocked: false, reason: '' };
+    cloudflareCheckResult = { blocked: false, reason: '' };
+    return cloudflareCheckResult;
   } catch (error) {
-    // If navigation fails (timeout, etc.), it might be Cloudflare
     if (error.message.includes('timeout') || error.message.includes('net::ERR_')) {
-      return { blocked: true, reason: `Navigation error: ${error.message}` };
+      cloudflareCheckResult = { blocked: true, reason: `Navigation error: ${error.message}` };
+      return cloudflareCheckResult;
     }
-    return { blocked: false, reason: '' };
+    cloudflareCheckResult = { blocked: false, reason: '' };
+    return cloudflareCheckResult;
+  } finally {
+    if (shouldClosePage && page) {
+      await page.close();
+    }
   }
 }
 
 test.describe.configure({ retries: 2 });
 
 test.describe('CI Smoke Tests - automationexercise.com', () => {
-  // Use test.beforeAll to check Cloudflare once per worker
-  test.beforeAll(async ({ browser }) => {
-    // Create a temporary page to check Cloudflare once before all tests
-    const page = await browser.newPage();
-    try {
-      const result = await checkCloudflareBeforeTest(page);
-      if (result.blocked) {
-        // Store result in test.info() for later access
-        test.info().cloudflareBlocked = true;
-        test.info().cloudflareReason = result.reason;
-        console.log(`⚠️ Cloudflare detected in beforeAll: ${result.reason}`);
-      } else {
-        test.info().cloudflareBlocked = false;
-        test.info().cloudflareReason = '';
-      }
-    } catch (error) {
-      test.info().cloudflareBlocked = true;
-      test.info().cloudflareReason = `Navigation error: ${error.message}`;
-      console.log(`⚠️ Cloudflare detected (error) in beforeAll: ${error.message}`);
+  // Use a test that runs once per worker to check Cloudflare
+  test('setup: check Cloudflare', async ({ browser }) => {
+    const result = await checkCloudflareOnce(browser);
+    if (result.blocked) {
+      console.log(`⚠️ Cloudflare detected: ${result.reason}`);
+    } else {
+      console.log('✅ No Cloudflare blocking detected');
     }
-    await page.close();
+    // This test always passes - it's just for side effects
+    expect(true).toBe(true);
   });
 
   test('GET / returns HTML content', async ({ page }) => {
-    // Check Cloudflare status from beforeAll
-    if (test.info().cloudflareBlocked) {
-      console.log(`⚠️ [Home page] SKIPPED: ${test.info().cloudflareReason}`);
-      test.skip(true, `Blocked by CloudFlare: ${test.info().cloudflareReason}`);
+    const result = await checkCloudflareOnce(page);
+    if (result.blocked) {
+      console.log(`⚠️ [Home page] SKIPPED: ${result.reason}`);
+      test.skip(true, `Blocked by CloudFlare: ${result.reason}`);
     }
     
     await page.goto('https://automationexercise.com/', { waitUntil: 'domcontentloaded', timeout: 30000 });
@@ -79,8 +91,9 @@ test.describe('CI Smoke Tests - automationexercise.com', () => {
   });
 
   test('GET /products returns products page', async ({ page }) => {
-    if (test.info().cloudflareBlocked) {
-      test.skip(true, `Blocked by CloudFlare: ${test.info().cloudflareReason}`);
+    const result = await checkCloudflareOnce(page);
+    if (result.blocked) {
+      test.skip(true, `Blocked by CloudFlare: ${result.reason}`);
     }
     
     await page.goto('https://automationexercise.com/products', { waitUntil: 'domcontentloaded', timeout: 30000 });
@@ -88,8 +101,9 @@ test.describe('CI Smoke Tests - automationexercise.com', () => {
   });
 
   test('GET /login returns login page', async ({ page }) => {
-    if (test.info().cloudflareBlocked) {
-      test.skip(true, `Blocked by CloudFlare: ${test.info().cloudflareReason}`);
+    const result = await checkCloudflareOnce(page);
+    if (result.blocked) {
+      test.skip(true, `Blocked by CloudFlare: ${result.reason}`);
     }
     
     await page.goto('https://automationexercise.com/login', { waitUntil: 'domcontentloaded', timeout: 30000 });
@@ -97,8 +111,9 @@ test.describe('CI Smoke Tests - automationexercise.com', () => {
   });
 
   test('GET /signup returns signup page', async ({ page }) => {
-    if (test.info().cloudflareBlocked) {
-      test.skip(true, `Blocked by CloudFlare: ${test.info().cloudflareReason}`);
+    const result = await checkCloudflareOnce(page);
+    if (result.blocked) {
+      test.skip(true, `Blocked by CloudFlare: ${result.reason}`);
     }
     
     await page.goto('https://automationexercise.com/signup', { waitUntil: 'domcontentloaded', timeout: 30000 });
@@ -106,8 +121,9 @@ test.describe('CI Smoke Tests - automationexercise.com', () => {
   });
 
   test('GET /contact_us returns contact page', async ({ page }) => {
-    if (test.info().cloudflareBlocked) {
-      test.skip(true, `Blocked by CloudFlare: ${test.info().cloudflareReason}`);
+    const result = await checkCloudflareOnce(page);
+    if (result.blocked) {
+      test.skip(true, `Blocked by CloudFlare: ${result.reason}`);
     }
     
     await page.goto('https://automationexercise.com/contact_us', { waitUntil: 'domcontentloaded', timeout: 30000 });
@@ -115,40 +131,12 @@ test.describe('CI Smoke Tests - automationexercise.com', () => {
   });
 
   test('GET /test_cases returns test cases page', async ({ page }) => {
-    if (test.info().cloudflareBlocked) {
-      test.skip(true, `Blocked by CloudFlare: ${test.info().cloudflareReason}`);
+    const result = await checkCloudflareOnce(page);
+    if (result.blocked) {
+      test.skip(true, `Blocked by CloudFlare: ${result.reason}`);
     }
     
     await page.goto('https://automationexercise.com/test_cases', { waitUntil: 'domcontentloaded', timeout: 30000 });
     await expect(page.locator('body')).toContainText('Test Cases', { timeout: 10000 });
   });
 });
-
-async function checkCloudflareBeforeTest(page) {
-  try {
-    // First do a quick navigation with a short timeout to see if Cloudflare blocks
-    const response = await page.goto('https://automationexercise.com/', { 
-      waitUntil: 'domcontentloaded', 
-      timeout: 15000 
-    });
-    
-    // Check response status first
-    if (response && [403, 503].includes(response.status())) {
-      return { blocked: true, reason: `HTTP Status ${response.status()}` };
-    }
-    
-    // Check for Cloudflare
-    const cfResult = await checkCloudflareWithRetry(page, 3, 2000);
-    if (cfResult.blocked) {
-      return { blocked: true, reason: cfResult.reason };
-    }
-    
-    return { blocked: false, reason: '' };
-  } catch (error) {
-    // If navigation fails (timeout, etc.), it might be Cloudflare
-    if (error.message.includes('timeout') || error.message.includes('net::ERR_')) {
-      return { blocked: true, reason: `Navigation error: ${error.message}` };
-    }
-    return { blocked: false, reason: '' };
-  }
-}
