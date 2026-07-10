@@ -46,7 +46,7 @@ const allProjects = {
         ]
       }
     }
-  },
+  }
 };
 
 const getProjects = () => {
