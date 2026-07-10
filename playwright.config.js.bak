@@ -46,14 +46,17 @@ const allProjects = {
         }
       }
     }
-  };
+  }
 
 const getProjects = () => {
   const browsers = (process.env.CI_BROWSERS || 'chromium,firefox,webkit')
     .split(',')
     .map(b => b.trim());
+  
   return browsers.map(b => allProjects[b]).filter(Boolean);
 };
+
+const { defineConfig } = require('@playwright/test');
 
 module.exports = defineConfig({
   testDir: './tests',
@@ -62,7 +65,9 @@ module.exports = defineConfig({
   retries: process.env.CI ? 3 : 0,
   workers: process.env.CI ? 1 : undefined,
   timeout: 120000,
-  expect: { timeout: 30000 },
+  expect: {
+    timeout: 30000
+  },
   reporter: process.env.CI ? [['html', { outputFolder: 'playwright-report', open: 'never' }], ['line']] : 'html',
   use: {
     baseURL: 'https://automationexercise.com',

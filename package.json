@@ -19,7 +19,8 @@
     "e2e-testing",
     "automationexercise",
     "ci-cd",
-    "github-actions"
+    "github-actions",
+    "allure-report"
   ],
   "scripts": {
     "test": "playwright test",
@@ -31,6 +32,7 @@
     "test:webkit": "playwright test --project=webkit",
     "test:report": "playwright show-report",
     "test:ci": "playwright test --retries=2 --trace=on-first-retry",
+    "test:allure": "playwright test --reporter=line,allure-playwright",
     "install:browsers": "playwright install --with-deps",
     "lint": "eslint . --ext .js",
     "lint:fix": "eslint . --ext .js --fix"
@@ -38,6 +40,7 @@
   "devDependencies": {
     "@playwright/test": "^1.53.1",
     "@types/node": "^24.0.3",
+    "allure-playwright": "^3.0.0",
     "eslint": "^9.0.0"
   },
   "engines": {
