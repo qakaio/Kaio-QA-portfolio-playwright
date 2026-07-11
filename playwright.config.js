@@ -64,7 +64,7 @@ module.exports = defineConfig({
   workers: process.env.CI ? 1 : undefined,
   timeout: 120000,
   expect: { timeout: 30000 },
-  reporter: process.env.CI ? [['html', { outputFolder: 'playwright-report', open: 'never' }], ['line']] : 'html',
+  reporter: process.env.CI ? [['html', { outputFolder: 'playwright-report', open: 'never' }], ['line'], ['allure-playwright']] : 'html',
   use: {
     baseURL: 'https://automationexercise.com',
     trace: 'on-first-retry',
