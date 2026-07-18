@@ -55,7 +55,7 @@ jobs:
 
       - name: Run Playwright CI smoke tests
         run: |
-          npx playwright test ci-smoke.spec.js --project=${{ matrix.project }} --retries=2 --trace=on-first-retry
+          npx playwright test --project=${{ matrix.project }} --retries=2 --trace=on-first-retry
         env:
           CI: true
           CI_BROWSERS: chromium
@@ -111,7 +111,7 @@ jobs:
         run: npm install -g allure-commandline
 
       - name: Run tests for Allure
-        run: npx playwright test ci-smoke.spec.js --project=chromium --retries=1
+        run: npx playwright test --project=chromium --retries=1
         env:
           CI: true
           CI_BROWSERS: chromium
