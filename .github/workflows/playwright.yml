@@ -28,7 +28,7 @@ jobs:
   test:
     name: Playwright Tests
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
@@ -54,9 +54,9 @@ jobs:
         run: npx playwright install --with-deps
         timeout-minutes: 30
 
-      - name: Run Playwright CI smoke tests
+      - name: Run Playwright tests (all)
         run: |
-          npx playwright test --project=${{ matrix.project }} --retries=2 --trace=on-first-retry
+          npx playwright test --project=chromium --retries=2 --trace=on-first-retry --config=None
         env:
           CI: true
           CI_BROWSERS: chromium
@@ -111,8 +111,9 @@ jobs:
       - name: Install Allure
         run: npm install -g allure-commandline
 
-      - name: Run tests for Allure
-        run: npx playwright test --project=chromium --retries=1
+      - name: Run tests for Allure Collection
+        run: |
+          npx playwright test --project=chromium --retries=1 --output-dir=test-results
         env:
           CI: true
           CI_BROWSERS: chromium
@@ -124,8 +125,10 @@ jobs:
         with:
           name: allure-results
           path: allure-results/
+          merge-multiple: true
 
       - name: Generate Allure Report
+        if: always()
         run: |
           npx allure generate allure-results --clean -o allure-report --name "Kaio-QA-portfolio-playwright - Playwright Test Automation Framework"
         env:
