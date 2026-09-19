@@ -101,7 +101,7 @@ Repositories in scope:
 ### Playwright Automation
 
 - [x] Remove the unused backup config and empty Pages placeholder.
-- [ ] Confirm the Chromium smoke workflow passes after restricting it to `tests/ci-smoke.spec.js` and document the reason for running only Chromium in CI.
+- [x] Confirm the Chromium smoke workflow passes after restricting it to `tests/ci-smoke.spec.js` and document the reason for running only Chromium in CI. Run `35442187784` passed smoke, Allure, and both Pages deployments.
 - [x] Add concurrency control so scheduled runs do not overlap or cancel without explanation.
 - [ ] Replace duplicated selectors and actions with a small, clearly named page-object layer.
 - [ ] Align README test counts, browser claims, report paths, and live Pages links with the repository.
