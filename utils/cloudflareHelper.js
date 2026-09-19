@@ -74,4 +74,18 @@ async function checkCloudflareWithRetry(page, maxRetries = 3, retryDelay = 2000)
   return { blocked: false, reason: '' };
 }
 
-module.exports = { checkCloudflare, checkCloudflareWithRetry, CLOUDFLARE_INDICATORS };
+async function shouldSkipCloudflare(page, contextName = 'page action') {
+  const result = await checkCloudflare(page);
+  return {
+    shouldSkip: result.blocked,
+    reason: result.reason || `Cloudflare block detected in ${contextName}`,
+    contextName,
+  };
+}
+
+module.exports = {
+  checkCloudflare,
+  checkCloudflareWithRetry,
+  shouldSkipCloudflare,
+  CLOUDFLARE_INDICATORS,
+};

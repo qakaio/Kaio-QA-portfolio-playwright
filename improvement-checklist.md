@@ -34,38 +34,38 @@ Repositories in scope:
 
 ### Clone and Run Experience
 
-- [ ] Make every README pass the 60-second test: purpose, prerequisites, install, one test command, expected result, and report command.
-- [ ] Add a consistent `Getting Started` section and a small architecture diagram to every repository.
-- [ ] Use the repository's committed lockfile and `npm ci` or a pinned Python dependency set in every CI workflow.
-- [ ] Add `.env.example` wherever configuration is required; document which values are optional and never commit real secrets.
-- [ ] Make test commands work from a clean clone without undocumented global tools.
-- [ ] Keep filenames, test names, package names, and README examples consistent.
+- [x] Make every README pass the 60-second test: purpose, prerequisites, install, one test command, expected result, and report command.
+- [x] Add a consistent `Getting Started` section and a small architecture diagram to every repository.
+- [x] Use the repository's committed lockfile and `npm ci` or a pinned Python dependency set in every CI workflow.
+- [x] Add `.env.example` wherever configuration is required; document which values are optional and never commit real secrets.
+- [x] Make test commands work from a clean clone without undocumented global tools.
+- [x] Keep filenames, test names, package names, and README examples consistent.
 
 ### Code Quality
 
-- [ ] Remove dead helpers, duplicate fixtures, backup files, placeholder files, unused npm scripts, and stale report directories.
-- [ ] Remove commented-out code and replace magic URLs, credentials, timeouts, and selectors with named configuration.
-- [ ] Add linting and formatting commands that are deterministic and pass locally and in CI.
-- [ ] Prefer focused helpers and page/service objects over repeated setup code.
-- [ ] Replace broad exception handling with specific exceptions or documented fallback behavior.
-- [ ] Add type checking where the language and framework support it.
-- [ ] Keep test data separate from test behavior and make destructive actions explicit.
+- [x] Remove dead helpers, duplicate fixtures, backup files, placeholder files, unused npm scripts, and stale report directories.
+- [x] Remove commented-out code and replace magic URLs, credentials, timeouts, and selectors with named configuration.
+- [x] Add linting and formatting commands that are deterministic and pass locally and in CI.
+- [x] Prefer focused helpers and page/service objects over repeated setup code.
+- [x] Replace broad exception handling with specific exceptions or documented fallback behavior.
+- [x] Add type checking where the language and framework support it.
+- [x] Keep test data separate from test behavior and make destructive actions explicit.
 
 ### Test Engineering
 
-- [ ] Label tests as smoke, functional, contract, security, performance, or exploratory.
-- [ ] Add stable assertions for status, schema, business behavior, and useful failure diagnostics.
-- [ ] Avoid tests that pass only because failures are swallowed or skipped silently.
-- [ ] Quarantine genuinely flaky tests with an issue link and an owner; do not hide ordinary failures with retries.
-- [ ] Add negative cases and boundary cases where they demonstrate engineering judgment.
-- [ ] Publish concise test evidence: counts, duration, browser/environment, and known limitations.
+- [x] Label tests as smoke, functional, contract, security, performance, or exploratory.
+- [x] Add stable assertions for status, schema, business behavior, and useful failure diagnostics.
+- [x] Avoid tests that pass only because failures are swallowed or skipped silently.
+- [x] Quarantine genuinely flaky tests with an issue link and an owner; do not hide ordinary failures with retries.
+- [x] Add negative cases and boundary cases where they demonstrate engineering judgment.
+- [x] Publish concise test evidence: counts, duration, browser/environment, and known limitations.
 
 ### CI/CD and Security
 
 - [ ] Pin action major versions deliberately and migrate deprecated Node 20-based actions and `setup-java@v4` warnings.
 - [x] Add least-privilege `permissions` blocks to every workflow.
 - [x] Use concurrency cancellation for superseded branch runs and document scheduled-run behavior.
-- [ ] Upload reports only when they exist; make report publication depend on successful test jobs.
+- [x] Upload reports only when they exist; make report publication depend on successful test jobs.
 - [ ] Run secret scanning and dependency auditing on every repository.
 - [ ] Confirm no API keys, session cookies, passwords, or personal tokens exist in source or Git history.
 - [ ] Rotate the exposed GitHub token outside this workspace and use a new minimum-scope credential.
@@ -111,9 +111,9 @@ Repositories in scope:
 ### AI Playwright Testing
 
 - [x] Keep deterministic UI tests and AI-dependent showcase tests distinguishable.
-- [ ] Skip AI-dependent cases with a clear reason when `GROQ_API_KEY` is absent; never turn missing credentials into silent passes.
-- [ ] Add a pinned Python lock or constraints file and document the supported Python version.
-- [ ] Move model name, timeout, and retry policy into typed configuration.
+- [x] Skip AI-dependent cases with a clear reason when `GROQ_API_KEY` is absent; never turn missing credentials into silent passes.
+- [x] Add a pinned Python lock or constraints file and document the supported Python version.
+- [x] Move model name, timeout, and retry policy into typed configuration.
 - [ ] Add tests for malformed model output, rate limits, empty responses, and fallback selectors.
 - [ ] Remove showcase code that duplicates production helpers or does not demonstrate a measurable AI benefit.
 

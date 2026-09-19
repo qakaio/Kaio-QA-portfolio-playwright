@@ -4,9 +4,35 @@
 ![Allure Report](https://img.shields.io/badge/Allure-Report-brightgreen?logo=allure)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-Complete automated test suite using [Playwright](https://playwright.dev/) with JavaScript, covering **26 Test Cases** from [AutomationExercise](https://www.automationexercise.com/) e-commerce demo site.
+Complete automated test suite using [Playwright](https://playwright.dev/) with JavaScript for the [AutomationExercise](https://www.automationexercise.com/) e-commerce demo site.
+
+The suite includes a broad set of end-to-end scenarios and a CI-safe smoke gate. Because the public site is protected by Cloudflare, the stable CI signal is the smoke path, while the full scenario set is intended for local validation and debugging.
 
 Built by [Kaio Garcia](https://github.com/qakaio) — Senior QA Engineer
+
+## 60-second start
+
+- Purpose: Browser automation for the AutomationExercise storefront with a stable smoke gate and a broader local suite.
+- Prerequisites: Node.js 18+, npm, and a working browser runtime.
+- Install: `npm ci` and `npx playwright install chromium`.
+- One test command: `npx playwright test tests/ci-smoke.spec.js --project=chromium`.
+- Expected result: the smoke suite passes in CI-safe conditions; if Cloudflare blocks the public site, the helper marks the run as skipped with a clear reason.
+- Report command: `npx playwright show-report` or `npx allure generate allure-results --clean -o allure-report`.
+
+## Getting Started
+
+```text
+Kaio-QA-portfolio-playwright
+├── tests/                 # end-to-end scenarios and smoke gate
+├── utils/                 # shared helpers and Cloudflare-aware guards
+├── .github/workflows/     # CI jobs for smoke, reports, and Pages deployment
+├── playwright.config.js   # browser + reporter configuration
+├── package.json           # install and test scripts
+├── README.md              # local runbook and project narrative
+└── allure-results/        # generated evidence for report publishing
+```
+
+This repository demonstrates a realistic browser-automation workflow: design stable test steps, isolate the CI-safe smoke path, and keep the reporting pipeline honest when public-site protections interfere.
 
 ---
 
@@ -14,12 +40,12 @@ Built by [Kaio Garcia](https://github.com/qakaio) — Senior QA Engineer
 
 | Metric | Status |
 |--------|--------|
-| **Test Cases** | 26/26 passing |
+| **Coverage Scope** | End-to-end flows for the AutomationExercise site |
+| **CI Signal** | Chromium smoke gate + Cloudflare-aware skip logic |
 | **Cross-Browser** | Chromium, Firefox, WebKit ✅ |
-| **CI/CD** | GitHub Actions (daily 09:00/21:00 UTC) |
-| **Reports** | HTML (auto-published to GitHub Pages) + **Allure Report** |
-| **Flaky Tests** | <1% (quarantine policy enforced) |
-| **Cloudflare Handling** | Graceful skip with informative logs |
+| **CI/CD** | GitHub Actions workflow with safe smoke execution |
+| **Reports** | HTML + **Allure Report** |
+| **Limit** | Cloudflare may block public-site checks in CI, so smoke coverage is intentionally constrained |
 
 ---
 

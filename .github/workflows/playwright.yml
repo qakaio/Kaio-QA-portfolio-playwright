@@ -21,7 +21,6 @@ on:
         default: 'all'
 
 env:
-  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
   CI_BROWSERS: ${{ github.event.inputs.browser || 'chromium' }}
 
 concurrency:
