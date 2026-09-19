@@ -26,6 +26,7 @@ Repositories in scope:
 - [x] Add concurrency cancellation and read-only default permissions to all six CI workflows.
 - [x] Correct the API README project tree and replace unsupported coverage counts with factual coverage areas.
 - [x] Make the Playwright CI smoke job run only `tests/ci-smoke.spec.js`; keep the full suite available for manual runs.
+- [x] Give Playwright Pages jobs explicit write permission while keeping the workflow default read-only.
 
 ## Shared Best Practices
 
