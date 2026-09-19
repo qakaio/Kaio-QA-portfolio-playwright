@@ -15,9 +15,9 @@ This checklist covers all six `qakaio` portfolio repositories. Items are limited
 
 - [x] API testing: recent workflow runs were passing before this review.
 - [x] Pentest: recent test and Pages deployment runs were passing before this review.
-- [ ] Performance testing: repair and verify the JMeter test-file mapping. The workflow referenced files that did not exist; the mapping is now corrected.
+- [x] Performance testing: repair and verify the JMeter test-file mapping. The corrected workflow passed JMeter, Allure generation, and Pages deployment in run `35440350410`.
 - [ ] Playwright: verify the active Chromium workflow completes successfully after the cleanup push; recent scheduled runs were cancelled.
-- [ ] AI Playwright testing: verify the workflow starts and completes after removing the empty Allure environment block; recent runs had startup failures.
+- [ ] AI Playwright testing: verify the active workflow completes after removing the empty Allure environment block and making Ruff rules explicit. The test and Allure jobs passed in the prior run; the new lint-gate run is still in progress.
 - [x] Selenium: recent workflow runs were passing before this review.
 - [ ] Re-run every workflow from `main` after fixes and require a successful conclusion before calling the portfolio green.
 - [ ] Keep report publication jobs dependent on successful test jobs and upload artifacts with `if: always()` only when the result exists.
@@ -63,8 +63,8 @@ This checklist covers all six `qakaio` portfolio repositories. Items are limited
 
 ## Release Gate
 
-- [ ] All six repositories have clean working trees.
+- [x] All six repositories have clean working trees.
 - [ ] All six `main` branches have successful latest CI runs.
-- [ ] No credential-bearing remote URLs remain in local Git configuration.
+- [x] No credential-bearing remote URLs remain in local Git configuration.
 - [ ] Token rotation is complete.
 - [ ] This checklist is committed to the central Playwright portfolio repository.
