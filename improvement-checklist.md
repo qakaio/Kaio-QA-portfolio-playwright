@@ -25,6 +25,7 @@ Repositories in scope:
 - [x] Add a consistent `.editorconfig` to all six repositories.
 - [x] Add concurrency cancellation and read-only default permissions to all six CI workflows.
 - [x] Correct the API README project tree and replace unsupported coverage counts with factual coverage areas.
+- [x] Align API HTML report artifact paths with the configured `test-report` output and serialize its Pages deployment.
 - [x] Make the Playwright CI smoke job run only `tests/ci-smoke.spec.js`; keep the full suite available for manual runs.
 - [x] Give Playwright Pages jobs explicit write permission while keeping the workflow default read-only.
 - [x] Run Playwright Allure generation from the bounded smoke suite and serialize Pages deployments.
