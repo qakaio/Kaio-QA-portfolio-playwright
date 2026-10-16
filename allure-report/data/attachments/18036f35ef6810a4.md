@@ -1,0 +1,96 @@
+# Page snapshot
+
+```yaml
+- link "View source on Github":
+  - /url: https://github.com/requests/httpbin
+- img
+- img
+- heading "httpbin.org 0.9.2" [level=2]
+- text: "[ Base URL: httpbin.org/ ]"
+- paragraph:
+  - text: "A simple HTTP Request & Response Service. Run locally:"
+  - code: $ docker run -p 80:80 kennethreitz/httpbin
+- link "the developer - Website":
+  - /url: https://kennethreitz.org
+- link "Send email to the developer":
+  - /url: mailto:me@kennethreitz.org
+- text: Schemes
+- combobox:
+  - option "https" [selected]
+- heading "HTTP Methods Testing different HTTP verbs Expand operation" [level=4]:
+  - link "HTTP Methods":
+    - /url: "#/HTTP Methods"
+  - text: Testing different HTTP verbs
+  - button "Expand operation":
+    - img
+- heading "Auth Auth methods Expand operation" [level=4]:
+  - link "Auth":
+    - /url: "#/Auth"
+  - text: Auth methods
+  - button "Expand operation":
+    - img
+- heading "Status codes Generates responses with given status code Expand operation" [level=4]:
+  - link "Status codes":
+    - /url: "#/Status codes"
+  - text: Generates responses with given status code
+  - button "Expand operation":
+    - img
+- heading "Request inspection Inspect the request data Expand operation" [level=4]:
+  - link "Request inspection":
+    - /url: "#/Request inspection"
+  - text: Inspect the request data
+  - button "Expand operation":
+    - img
+- heading "Response inspection Inspect the response data like caching and headers Expand operation" [level=4]:
+  - link "Response inspection":
+    - /url: "#/Response inspection"
+  - text: Inspect the response data like caching and headers
+  - button "Expand operation":
+    - img
+- heading "Response formats Returns responses in different data formats Expand operation" [level=4]:
+  - link "Response formats":
+    - /url: "#/Response formats"
+  - text: Returns responses in different data formats
+  - button "Expand operation":
+    - img
+- heading "Dynamic data Generates random and dynamic data Expand operation" [level=4]:
+  - link "Dynamic data":
+    - /url: "#/Dynamic data"
+  - text: Generates random and dynamic data
+  - button "Expand operation":
+    - img
+- heading "Cookies Creates, reads and deletes Cookies Expand operation" [level=4]:
+  - link "Cookies":
+    - /url: "#/Cookies"
+  - paragraph: Creates, reads and deletes Cookies
+  - button "Expand operation":
+    - img
+- heading "Images Returns different image formats Expand operation" [level=4]:
+  - link "Images":
+    - /url: "#/Images"
+  - text: Returns different image formats
+  - button "Expand operation":
+    - img
+- heading "Redirects Returns different redirect responses Expand operation" [level=4]:
+  - link "Redirects":
+    - /url: "#/Redirects"
+  - text: Returns different redirect responses
+  - button "Expand operation":
+    - img
+- heading "Anything Returns anything that is passed to request Expand operation" [level=4]:
+  - link "Anything":
+    - /url: "#/Anything"
+  - text: Returns anything that is passed to request
+  - button "Expand operation":
+    - img
+- text: "[Powered by"
+- link "Flasgger":
+  - /url: https://github.com/rochacbruno/flasgger
+- text: "]"
+- heading "Other Utilities" [level=2]
+- list:
+  - listitem:
+    - link "HTML form":
+      - /url: /forms/post
+    - text: that posts to /post /forms/post
+```

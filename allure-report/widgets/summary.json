@@ -1,1 +1,1 @@
-{"reportName":"Kaio-QA-portfolio-playwright - Playwright Test Automation Framework","testRuns":[],"statistic":{"failed":0,"broken":0,"skipped":0,"passed":0,"unknown":0,"total":0},"time":{}}
+{"reportName":"Kaio-QA-portfolio-playwright - Playwright Test Automation Framework","testRuns":[],"statistic":{"failed":80,"broken":0,"skipped":12,"passed":7,"unknown":0,"total":99},"time":{"start":1792116831945,"stop":1792119548052,"duration":2716107,"minDuration":1,"maxDuration":36223,"sumDuration":895782}}
